@@ -1,11 +1,14 @@
 {
-  "name": "cp-v4.0",
-  "version": "1.0.0",
+  "name": "cp-v4",
+  "version": "4.0.0",
   "description": "Node.js Command Post System for KGSACU",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node index.ts",
-    "build": "tsc"
+    "compile": "tsc",
+    "lint": "ts-standard",
+    "test": "jest",
+    "coverage": "jest --collect-coverage",
+    "serve": "node dist/src/app.js"
   },
   "repository": {
     "type": "git",
