@@ -1,0 +1,34 @@
+{
+  "transmissions": [
+    {
+      "transmission": "MESSAGE",
+      "serials" : [
+        {
+          "serial": "MES",
+          "description": "Message",
+          "type": "long"
+        }
+      ]
+    },
+    {
+      "transmission": "LOCSTAT",
+      "serials" : [
+        {
+          "serial": "A",
+          "description": "Location",
+          "type": "loc"
+        }, {
+          "serial": "B",
+          "description": "Stationary or Moving",
+          "type": "option",
+          "options": ["Moving", "Stationary"]
+        }, 
+        {
+          "serial": "C",
+          "description": "Time since halted or direction of movement",
+          "type": "short"
+        }
+      ]
+    }
+  ]
+}
