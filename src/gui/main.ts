@@ -1,7 +1,7 @@
 import { Response } from 'express-serve-static-core'
-import { Transmission } from '../serials'
+import { TransmissionTemplate } from '../serials'
 
-function generateHomePage (transmissionTypes: Transmission[]): any {
+function generateRecordTransmissionPage (transmissionTypes: TransmissionTemplate[]): any {
   return {
     layout: false,
     defaultTransmission: transmissionTypes[0].transmission,
@@ -9,8 +9,8 @@ function generateHomePage (transmissionTypes: Transmission[]): any {
   }
 }
 
-function renderHomePage (transmissionTypes: Transmission[], res: Response<any, Record<string, any>, number>): void {
-  res.render('index', generateHomePage(transmissionTypes))
+function renderRecordTransmission (transmissionTypes: TransmissionTemplate[], res: Response<any, Record<string, any>, number>): void {
+  res.render('index', generateRecordTransmissionPage(transmissionTypes))
 }
 
-export { renderHomePage }
+export { renderRecordTransmission }
