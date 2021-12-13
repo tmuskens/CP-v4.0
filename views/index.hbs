@@ -13,12 +13,7 @@
     <title>CP v4.0</title>
   </head>
   <body>
-    <script>
-      document.onload = function() {
-        alert('hello')
-      }
-    </script>
-    <div class="vh-100 w-100">
+    <div class="vh-100 w-100 d-flex flex-column">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
           <div class="container-fluid">
             <a class="navbar-brand" href="#">CP v4.0</a>
@@ -43,7 +38,7 @@
           </div>
         </nav>
 
-        <div class="container-fluid h-100">
+        <div class="container-fluid flex-grow-1">
           <div class="row h-100">
             <div class="col-2 bg-light h-100">
               <ul class="nav flex-column nav-pills">
@@ -56,8 +51,8 @@
                 {{/each}}
               </ul>
             </div>
-            <div class="col-10 h-100">
-              <iframe class="w-100" src="/transmission?type={{defaultTransmission}}" id="transmissionIframe">
+            <div class="col-10 h-100 nopadding">
+              <iframe class="w-100 h-100" src="/transmission/{{defaultTransmission}}" id="transmissionIframe">
               </iframe>
             </div>
           </div>
