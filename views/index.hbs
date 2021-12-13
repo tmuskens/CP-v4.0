@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- STYLE 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
+    <title>CP v4.0</title>
+  </head>
+  <body>
+    <div class="vh-100 w-100">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">CP v4.0</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Record Transmission</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Log</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Notes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Settings</a>
+              </li>
+          </div>
+        </div>
+      </nav>
+      <div class="container-fluid h-100">
+        <div class="row h-100">
+          <div class="col-2 bg-light h-100">
+            <ul class="nav flex-column nav-pills">
+              {{#each transmissions}}
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="#">{{this}}</a> <!-- action -> set iframe address - iframe gets data -->
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+          <div class="col-10 h-100">
+            TRANSMISSION IFRAME
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
