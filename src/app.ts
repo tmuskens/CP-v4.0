@@ -97,6 +97,15 @@ app.get('/record_transmission/:type', (req, res) => {
   })
 })
 
+app.get('/update_settings', (req, res) => {
+  for (const setting in req.query) {
+    if (setting === 'callsign') cp.setCallsign(req.query[setting] as string)
+    if (setting === 'duty-officer') cp.setDutyOfficer(req.query[setting] as string)
+    if (setting === 'net') users[req.cookies.AuthToken].setNet(req.query[setting] as string)
+  }
+  res.send('success')
+})
+
 app.listen(port, () => {
   console.log(`server started at http://localhost:${port}`)
 })

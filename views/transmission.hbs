@@ -20,32 +20,32 @@
       <table class="row-gap">
           <tr>
             <td style="padding-right: 0.5rem">
-              <button type="button" class="btn btn-outline-secondary btn-sm full-btn">This Callsign</button>
+              <button name="callsign" type="button" class="btn btn-outline-secondary btn-sm full-btn change-setting" data-bs-toggle="modal" data-bs-target="#modal-form">This Callsign</button>
             </td>
-            <td>{{callsign}}</td>
+            <td class="callsign-text">{{callsign}}</td>
           </tr>
           <tr>
             <td style="padding-right: 0.5rem">
-              <button type="button" class="btn btn-outline-secondary btn-sm full-btn">Duty Officer</button>
+              <button name="duty-officer" id="change-duty-officer" type="button" class="btn btn-outline-secondary btn-sm full-btn change-setting">Duty Officer</button>
             </td>
-            <td>{{dutyOfficer}}</td>
+            <td class="duty-officer-text">{{dutyOfficer}}</td>
           </tr>
           <tr>
             <td style="padding-right: 0.5rem">
-              <button type="button" class="btn btn-outline-secondary btn-sm full-btn">This Net</button>
+              <button name="net" id="change-net" type="button" class="btn btn-outline-secondary btn-sm full-btn change-setting">This Net</button>
             </td>
-            <td>{{net}}</td>
+            <td class="net-text">{{net}}</td>
           </tr>
         </table>
     </div>
     <div class="container-fluid h-100 px-3 pt-2">
-      <form autocomplete="off" action="../record_transmission/{{transmission.transmission}}">
+      <form name="transmission" autocomplete="off" action="../record_transmission/{{transmission.transmission}}">
         <table class="row-gap column-gap-sm">
           <tr>
             <td style="width: 5rem;"><strong>To</strong></td>
             <td><input type="text" name="to" class="form-control form-control-sm"></td>
             <td style="width: 4rem;">
-              <button type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">{{callsign}}</button>
+              <button type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn to-btn">{{callsign}}</button>
             </td>
             <td style="width: 4rem;">
               <button type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">KGS</button>
@@ -55,11 +55,11 @@
             <td><strong>From</strong></td>
             <td><input type="text" name="from" class="form-control form-control-sm"></td>
             <td style="width: 4rem;">
-              <button type="button" class="btn btn-sm btn-outline-secondary full-btn from-btn">{{callsign}}</button>
+              <button type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn from-btn">{{callsign}}</button>
             </td>
           </tr>
         </table>
-        <h4 class="pt-3">
+        <h4 class="pt-4">
           <strong>{{transmission.transmission}}</strong>
         </h4>
         <table class="column-gap row-gap w-100">
@@ -76,7 +76,7 @@
                   <input type="text" name="{{serial}}" class="form-control form-control-sm">
                 {{/ifEquals}}
                 {{#ifEquals type 'long'}}
-                  <textarea class="form-control form-control-sm" name="{{serial}}" rows="3"></textarea>
+                  <textarea style="resize:none" class="form-control form-control-sm" name="{{serial}}" rows="3"></textarea>
                 {{/ifEquals}}
                 {{#ifEquals type 'loc'}}
                   <input type="text" name="{{serial}}" class="form-control form-control-sm">
@@ -96,11 +96,43 @@
             </tr>
           {{/each}}
         </table>
-        <div class="footer bg-light">
-          <button class="btn btn-primary" id="transmission-submit" type="submit">Record Transmission</button>
+        <div class="m-3 footer border-top">
+          <div class="btn-toolbar mt-3 pull-right">
+            <div class="form-check mx-1" style="padding-top: 0.1rem;">
+              <input class="form-check-input" type="checkbox" name="print" value="" id="print-check-box">
+              <label class="form-check-label" style="font-size: 0.875rem" for="print-check-box">
+                Print
+              </label>
+            </div>
+            <button class="btn btn-sm btn-outline-secondary mx-1" type="submit">Record</button>
+            <button class="btn btn-sm btn-outline-secondary" type="reset">Cancel</button>
+            <button class="btn btn-sm btn-outline-secondary mx-5" id="print-previous" type="button">Print Previous</button>
+          </div>
         </div>
       </form>
+    </div>
+
+    <div id="modal-form" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="modal-title" class="modal-title">title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form name="settings" action="../update_settings">
+            <div class="modal-body">
+              <div class="input-group mb-3">
+                <input id="modal-input" type="text" class="form-control" name="" placeholder="" required/>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </form>
+        </div>
       </div>
+    </div>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
   </body>
