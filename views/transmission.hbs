@@ -97,7 +97,8 @@
           {{/each}}
         </table>
         <div class="m-3 footer border-top">
-          <div class="btn-toolbar mt-3 pull-right">
+          <div class="d-flex mt-3 pull-right">
+            <button class="me-auto btn btn-sm btn-outline-secondary mx-1" id="print-previous" type="button">Print Previous</button>
             <div class="form-check mx-1" style="padding-top: 0.1rem;">
               <input class="form-check-input" type="checkbox" name="print" value="" id="print-check-box">
               <label class="form-check-label" style="font-size: 0.875rem" for="print-check-box">
@@ -105,8 +106,7 @@
               </label>
             </div>
             <button class="btn btn-sm btn-outline-secondary mx-1" type="submit">Record</button>
-            <button class="btn btn-sm btn-outline-secondary" type="reset">Cancel</button>
-            <button class="btn btn-sm btn-outline-secondary mx-5" id="print-previous" type="button">Print Previous</button>
+            <button class="btn btn-sm btn-outline-secondary mx-1" type="reset">Cancel</button>
           </div>
         </div>
       </form>
