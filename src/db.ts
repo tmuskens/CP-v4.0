@@ -12,31 +12,38 @@ export interface FullTransmission {
 }
 
 export class DataBase {
-  #db: any
-  #open: boolean = false
-  #insertQueue: any[] = []
-  #openCon (): void {
-    this.#db = new sqlite3.Database('./data/log.db', sqlite3.OPEN_READWRITE, (err: any) => {
+  #openCon (): any {
+    return new sqlite3.Database('./data/log.db', sqlite3.OPEN_READWRITE, (err: any) => {
       if (err !== null) {
         console.error(err.message)
       }
       console.log('Connected to database.')
     })
-    this.#open = true
   }
 
-  #closeCon (): void {
-    this.#db.close((err: any) => {
+  #closeCon (db: any): void {
+    db.close((err: any) => {
       if (err !== null) {
         console.error(err.message)
       }
       console.log('Closed the database connection.')
     })
-    this.#open = false
   }
 
-  insertTransmission (transmission: FullTransmission): void {
-    console.log(transmission)
-    this.#insertQueue.push(transmission)
+  insertTransmission (transmission: FullTransmission, callback: (response: string) => void): void {
+    const db = this.#openCon()
+    const data = Object.values(transmission)
+    var message = 'incomplete'
+    db.run(`INSERT INTO log 
+            (transmission_type, reciever, sender, dtg, duty_officer, net, transmission_data) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)`, data, (err: any) => {
+      if (err !== null) {
+        message = err.message
+      } else {
+        message = 'success'
+      }
+      callback(message)
+    })
+    this.#closeCon(db)
   }
 }

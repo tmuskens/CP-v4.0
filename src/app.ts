@@ -4,7 +4,7 @@ import { renderRecordTransmission } from './gui/main'
 import { renderTransmission } from './gui/transmission'
 import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission } from './db'
-import { CommandPost } from './cp'
+import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 
 const cookieParser = require('cookie-parser')
@@ -25,10 +25,9 @@ app.set('view engine', '.hbs')
 app.set('views', './views')
 app.use('/assets', express.static('assets'))
 
+const cp: CommandPost = loadCP()
 const users: Record<string, CPUser> = loadUsers()
-
-const cp = new CommandPost()
-const serials = new Serials()
+const serials: Serials = new Serials()
 serials.readFile() // tslint:disable-line
 const db = new DataBase()
 
@@ -78,6 +77,7 @@ app.get('/set_net', (req, res) => {
 })
 
 app.get('/record_transmission/:type', (req, res) => {
+  console.log('transmission recieved')
   const to = req.query.to as string
   const from = req.query.from as string
   delete req.query.to
@@ -91,7 +91,9 @@ app.get('/record_transmission/:type', (req, res) => {
     net: users[req.cookies.AuthToken].getNet(),
     serials: JSON.stringify(req.query)
   }
-  db.insertTransmission(transmission)
+  db.insertTransmission(transmission, (message: string) => {
+    res.send(message)
+  })
 })
 
 app.listen(port, () => {

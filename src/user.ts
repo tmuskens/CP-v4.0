@@ -13,8 +13,8 @@ export class CPUser {
   }
 
   #writeToFile (): void {
-    const data = this.#authToken + '\\' + this.#net
-    fs.appendFile('USERS_FILE', data, function (err) {
+    const data = this.#authToken + '\\' + this.#net + '\n'
+    fs.appendFile(USERS_FILE, data, function (err) {
       if (err !== null) throw err
     })
   }
@@ -30,6 +30,7 @@ export class CPUser {
 
 export function loadUsers (): Record<string, CPUser> {
   const data = fs.readFileSync(USERS_FILE).toString('utf-8')
+  fs.writeFile('/path/to/file', '', (e) => {})
   const users = data.split('\n')
   const result: Record<string, CPUser> = {}
   for (const line of users) {
