@@ -13,59 +13,95 @@
     <link rel="stylesheet" href="/assets/css/transmission.css">
   </head>
   <body>
-    <form action="../record_transmission/{{transmission.transmission}}">
-      <div class="vh-100">
-        <div class="header"> 
-          <h3>
-            {{transmission.transmission}}
-          </h3>
-        </div>
-        <div class="content">
-          <table>
+    <div class="container-fluid bg-primary px-2 pt-2 pb-1">
+      <h5 class="text-light">Record Transmission</h5>
+    </div>
+    <div class="settings border py-1 px-2">
+      <table class="row-gap">
+          <tr>
+            <td style="padding-right: 0.5rem">
+              <button type="button" class="btn btn-outline-secondary btn-sm full-btn">This Callsign</button>
+            </td>
+            <td>{{callsign}}</td>
+          </tr>
+          <tr>
+            <td style="padding-right: 0.5rem">
+              <button type="button" class="btn btn-outline-secondary btn-sm full-btn">Duty Officer</button>
+            </td>
+            <td>{{dutyOfficer}}</td>
+          </tr>
+          <tr>
+            <td style="padding-right: 0.5rem">
+              <button type="button" class="btn btn-outline-secondary btn-sm full-btn">This Net</button>
+            </td>
+            <td>{{net}}</td>
+          </tr>
+        </table>
+    </div>
+    <div class="container-fluid h-100 px-3 pt-2">
+      <form autocomplete="off" action="../record_transmission/{{transmission.transmission}}">
+        <table class="row-gap column-gap-sm">
+          <tr>
+            <td style="width: 5rem;"><strong>To</strong></td>
+            <td><input type="text" name="to" class="form-control form-control-sm"></td>
+            <td style="width: 4rem;">
+              <button type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">{{callsign}}</button>
+            </td>
+            <td style="width: 4rem;">
+              <button type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">KGS</button>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>From</strong></td>
+            <td><input type="text" name="from" class="form-control form-control-sm"></td>
+            <td style="width: 4rem;">
+              <button type="button" class="btn btn-sm btn-outline-secondary full-btn from-btn">{{callsign}}</button>
+            </td>
+          </tr>
+        </table>
+        <h4 class="pt-3">
+          <strong>{{transmission.transmission}}</strong>
+        </h4>
+        <table class="column-gap row-gap w-100">
+          <thead class="grey-row">
+            <th style="width: 4rem">Serial</th>
+            <th style="width: 20rem">Value</th>
+            <th>Description</th>
+          </thead>
+          {{#each transmission.serials}}
             <tr>
-              <td>To</td>
-              <td><input type="text" name="to" class="form-control"></td>
+              <td><strong>{{serial}}</strong></td>
+              <td>
+                {{#ifEquals type 'short'}}
+                  <input type="text" name="{{serial}}" class="form-control form-control-sm">
+                {{/ifEquals}}
+                {{#ifEquals type 'long'}}
+                  <textarea class="form-control form-control-sm" name="{{serial}}" rows="3"></textarea>
+                {{/ifEquals}}
+                {{#ifEquals type 'loc'}}
+                  <input type="text" name="{{serial}}" class="form-control form-control-sm">
+                {{/ifEquals}}
+                {{#ifEquals type 'option'}}
+                  {{#each options}}
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="{{../serial}}" value="{{this}}" id="{{this}}-radio">
+                      <label class="form-check-label" for="{{this}}-radio">
+                        {{this}}
+                      </label>
+                    </div>
+                  {{/each}}
+                {{/ifEquals}}
+              </td>
+              <td>{{description}}</td>
             </tr>
-            <tr>
-              <td>From</td>
-              <td><input type="text" name="from" class="form-control"></td>
-            </tr>
-          </table>
-          <table>
-            {{#each transmission.serials}}
-              <tr>
-                <td><strong>{{serial}}</strong></td>
-                <td>
-                  {{#ifEquals type 'short'}}
-                    <input type="text" name="{{serial}}" class="form-control">
-                  {{/ifEquals}}
-                  {{#ifEquals type 'long'}}
-                    <textarea class="form-control" name="{{serial}}" rows="3"></textarea>
-                  {{/ifEquals}}
-                  {{#ifEquals type 'loc'}}
-                    <input type="text" name="{{serial}}" class="form-control">
-                  {{/ifEquals}}
-                  {{#ifEquals type 'option'}}
-                    {{#each options}}
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="{{serial}}" value="{{this}}" id="{{this}}-radio">
-                        <label class="form-check-label" for="{{this}}-radio">
-                          {{this}}
-                        </label>
-                      </div>
-                    {{/each}}
-                  {{/ifEquals}}
-                </td>
-                <td>{{description}}</td>
-              </tr>
-            {{/each}}
-          </table>
-        </div>  
+          {{/each}}
+        </table>
         <div class="footer bg-light">
-          <button class="btn btn-primary" type="submit">Record Transmission</button>
+          <button class="btn btn-primary" id="transmission-submit" type="submit">Record Transmission</button>
         </div>
+      </form>
       </div>
-    </form>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.js"></script>
   </body>
 </html>

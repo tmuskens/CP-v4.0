@@ -3,6 +3,9 @@ var register = function (Handlebars) {
     // put all of your helpers inside this object
     ifEquals: function (arg1, arg2, options) {
       return (arg1 === arg2) ? options.fn(this) : options.inverse(this)
+    },
+    ifNotEquals: function (arg1, arg2, options) {
+      return (arg1 !== arg2) ? options.fn(this) : options.inverse(this)
     }
   }
 

@@ -29,6 +29,26 @@
           "type": "short"
         }
       ]
+    },
+    {
+      "transmission": "MAINTDEM",
+      "serials" : [
+        {
+          "serial": "A",
+          "description": "Message",
+          "type": "long"
+        }
+      ]
+    },
+    {
+      "transmission": "MOVEREQ",
+      "serials" : [
+        {
+          "serial": "A",
+          "description": "Message",
+          "type": "long"
+        }
+      ]
     }
   ]
 }

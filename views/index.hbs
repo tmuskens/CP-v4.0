@@ -14,25 +14,25 @@
   </head>
   <body>
     <div class="vh-100 w-100 d-flex flex-column">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#">CP v4.0</a>
+            <a class="navbar-brand" href="/index">CP v4.0</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Record Transmission</a>
+                  <a class="nav-link active " aria-current="page" href="/index">Record Transmission</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Log</a>
+                  <a class="nav-link" href="/log">Log</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Notes</a>
+                  <a class="nav-link" href="/notes">Notes</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Settings</a>
+                  <a class="nav-link" href="/settings">Settings</a>
                 </li>
             </div>
           </div>
@@ -40,19 +40,25 @@
 
         <div class="container-fluid flex-grow-1">
           <div class="row h-100">
-            <div class="col-2 bg-light h-100">
-              <ul class="nav flex-column nav-pills">
+            <div class="col-2 px-3 pt-3 bg-light h-100">
+              <div class="d-grid gap-3">
+                <button class="btn btn-primary disabled" aria-current="page">
+                  TRANSMISSIONS
+                </button>
                 {{#each transmissions}}
-                  <li class="nav-item">
-                    <button class="nav-link" aria-current="page" onclick="selectTransmission('{{transmission}}')">
-                      {{transmission}}
-                    </button>
-                  </li>
+                    {{#ifEquals 0 @index}}
+                      <button class="btn btn-outline-secondary transmission-btn active" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
+                    {{/ifEquals}}
+                    {{#ifNotEquals 0 @index}}
+                      <button class="btn btn-outline-secondary transmission-btn" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
+                    {{/ifNotEquals}}
+                        {{transmission}}
+                      </button>
                 {{/each}}
-              </ul>
+              </div>
             </div>
-            <div class="col-10 h-100 nopadding">
-              <iframe class="w-100 h-100" src="/transmission/{{defaultTransmission}}" id="transmissionIframe">
+            <div class="col-10 h-100 p-3">
+              <iframe class="w-100 h-100 border" src="/transmission/{{defaultTransmission}}" id="transmissionIframe">
               </iframe>
             </div>
           </div>

@@ -1,4 +1,8 @@
 function selectTransmission (transmission) {
+  $('.transmission-btn').each(function () {
+    if (this.value !== transmission) $(this).removeClass('active')
+    else $(this).addClass('active')
+  })
   document.getElementById('transmissionIframe').setAttribute('src', '/transmission/' + transmission)
 }
 
@@ -14,8 +18,19 @@ function getFormData (form) {
   return obj
 }
 
+$('.to-btn').click(function () {
+  const to = document.getElementsByName('to')[0]
+  $(to).val(this.innerHTML)
+})
+
+$('.from-btn').click(function () {
+  const from = document.getElementsByName('from')[0]
+  $(from).val(this.innerHTML)
+})
+
 document.addEventListener('submit', (e) => {
   const form = e.target
+  console.log(form.action)
   const data = getFormData(form)
   $.ajax({
     url: form.action,

@@ -6,10 +6,10 @@ import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
-
-const cookieParser = require('cookie-parser')
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
+
+const cookieParser = require('cookie-parser')
 
 console.log('starting server')
 const app = express()
@@ -28,7 +28,7 @@ app.use('/assets', express.static('assets'))
 const cp: CommandPost = loadCP()
 const users: Record<string, CPUser> = loadUsers()
 const serials: Serials = new Serials()
-serials.readFile() // tslint:disable-line
+serials.readFile()
 const db = new DataBase()
 
 const generateAuthToken = (): string => {
@@ -37,6 +37,7 @@ const generateAuthToken = (): string => {
 
 /* --- LOADING PAGES --- */
 
+// Input net page
 app.get('/', (req, res) => {
   if (req.cookies.AuthToken !== undefined) {
     res.redirect('/index')
@@ -52,14 +53,14 @@ app.get('/index', (req, res) => {
     return
   }
   const transmissionTypes = serials.getTransmissionTypes()
-  console.log(users[req.cookies.AuthToken].getNet())
   renderRecordTransmission(transmissionTypes, res)
 })
 
 // Load individual transmission page iframes
 app.get('/transmission/:type', (req, res) => {
   const transmission: TransmissionTemplate = serials.getTransmissionFromString(req.params.type)
-  renderTransmission(transmission, res)
+  const user: CPUser = users[req.cookies.AuthToken]
+  renderTransmission(transmission, cp, user, res)
 })
 
 app.get('/test', (req, res) => {

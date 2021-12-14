@@ -1,17 +1,32 @@
-.header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3rem;
+.row-gap {
+  border-collapse: separate;
+  border-spacing: 0 0.5rem;
 }
-.content {
+
+.full-btn {
+  width: 100%
+}
+
+.column-gap td {
+  vertical-align: top;
+  padding-right: 1rem;
+}
+
+.column-gap-sm td {
+  vertical-align: top;
+  padding-right: 0.5rem;
+}
+
+.grey-row {
+  background-color: #d7d8da;
+}
+
+.settings {
   position: absolute;
+  right: 0.5rem;
   top: 3rem;
-  left: 0;
-  right: 0;
-  bottom: 3rem;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
