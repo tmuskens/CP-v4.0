@@ -30,12 +30,14 @@ export class CPUser {
 
 export function loadUsers (): Record<string, CPUser> {
   const data = fs.readFileSync(USERS_FILE).toString('utf-8')
-  fs.writeFile('/path/to/file', '', (e) => {})
+  fs.writeFile(USERS_FILE, '', (e) => {})
   const users = data.split('\n')
   const result: Record<string, CPUser> = {}
   for (const line of users) {
     const [token, user] = line.split('\\', 2)
-    result[token] = new CPUser(user, token)
+    if (token !== undefined && token !== '' && user !== undefined && user !== '') {
+      result[token] = new CPUser(user, token)
+    }
   }
   return result
 }
