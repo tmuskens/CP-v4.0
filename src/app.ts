@@ -2,7 +2,7 @@ import express from 'express'
 import { engine } from 'express-handlebars'
 import { renderRecordTransmission } from './gui/main'
 import { renderTransmission } from './gui/transmission'
-import { renderLog } from './gui/log'
+import { renderLog, renderPrintout } from './gui/log'
 import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission, LogQuery } from './db'
 import { CommandPost, loadCP } from './cp'
@@ -85,7 +85,10 @@ app.get('/log', (req, res) => {
   renderLog(res, db, getBlankQuery())
 })
 
-app.get('/log/:id', (req, res) => {})
+app.get('/log/:id', (req, res) => {
+  const id: number = parseInt(req.params.id)
+  renderPrintout(res, id, db)
+})
 
 app.get('/test', (req, res) => {
   res.render('test')

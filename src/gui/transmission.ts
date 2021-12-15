@@ -9,6 +9,8 @@ function generateTransmission (transmission: TransmissionTemplate, cp: CommandPo
     net: user.getNet(),
     dutyOfficer: cp.getDutyOfficer(),
     callsign: cp.getCallsign(),
+    locations: cp.getLocations(),
+    callsigns: cp.getCallsigns(),
     layout: false
   }
 }

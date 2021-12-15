@@ -11,6 +11,17 @@ export interface FullTransmission {
   serials: string
 }
 
+export interface FullTransmission2 {
+  id?: number
+  transmission_type: string
+  reciever: string
+  sender: string
+  dtg: number
+  duty_officer: string
+  net: string
+  transmission_data: string
+}
+
 export interface LogTransmission {
   id: number
   dtg: number
@@ -68,9 +79,6 @@ export class DataBase {
   }
 
   getLog (query: LogQuery, callback: (log: LogTransmission[]) => void): void {
-    let sql = ''
-    let params: any[] = []
-
     const db = this.#openCon()
     const select = `SELECT id, 
                         dtg, 
@@ -88,10 +96,10 @@ export class DataBase {
                     net LIKE ? AND
                     transmission_data LIKE ? `
     const idQuery = 'AND id LIKE ? '
-    const end = `ORDER BY dtg DESC
+    const end = `ORDER BY id DESC
                  LIMIT 100;`
-    sql = (select + where + idQuery + end)
-    params = ['%' + query.type + '%', '%' + query.to + '%', '%' + query.from + '%', query.dtgFrom,
+    const sql = (select + where + idQuery + end)
+    const params = ['%' + query.type + '%', '%' + query.to + '%', '%' + query.from + '%', query.dtgFrom,
       query.dtgTo, '%' + query.dutyOfficer + '%', '%' + query.net + '%', '%' + query.content + '%', '%' + query.id + '%']
 
     db.all(sql, params, (err: any, rows: any) => {
@@ -101,7 +109,15 @@ export class DataBase {
     this.#closeCon(db)
   }
 
-  getReturn (id: number): FullTransmission {
-    throw new Error('cannot find')
+  getReturn (id: number, callback: (log: FullTransmission2) => void): void {
+    const db = this.#openCon()
+    const sql = `SELECT *
+                    FROM log
+                    WHERE id = ?`
+    db.get(sql, [id], (err: any, result: any) => {
+      if (err !== null) throw err
+      callback(result)
+    })
+    this.#closeCon(db)
   }
 }

@@ -1,14 +1,7 @@
-#log-table { 
-  overflow: auto; 
-  height: 100px; 
-}
-#log-table thead th { 
-  position: sticky; 
-  top: 0; 
-  z-index: 1; 
+#log-table > * > * > * {
+  padding: 0.05rem 0.25rem !important;
 }
 
-/* Just common table stuff. Really. */
-table  { border-collapse: collapse; width: 100%; }
-th, td { padding: 8px 16px; }
-th     { background:#eee; }
+.log-row {
+  cursor: pointer;
+}

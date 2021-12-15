@@ -11,6 +11,13 @@ function populateLogTable (log) {
   }
 }
 
+$('.log-row').click(function () {
+  $('.log-row').removeClass('bg-primary text-light')
+  $(this).addClass('bg-primary text-light')
+  const id = this.id
+  document.getElementById('displayIframe').setAttribute('src', '/log/' + id)
+})
+
 
 document.addEventListener('reset', (e) => {
   const form = e.target
@@ -35,3 +42,4 @@ document.addEventListener('submit', (e) => {
   })
   e.preventDefault()
 })
+
