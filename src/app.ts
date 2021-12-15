@@ -2,8 +2,9 @@ import express from 'express'
 import { engine } from 'express-handlebars'
 import { renderRecordTransmission } from './gui/main'
 import { renderTransmission } from './gui/transmission'
+import { renderLog } from './gui/log'
 import { Serials, TransmissionTemplate } from './serials'
-import { DataBase, FullTransmission } from './db'
+import { DataBase, FullTransmission, LogQuery } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 import bodyParser from 'body-parser'
@@ -30,6 +31,20 @@ const users: Record<string, CPUser> = loadUsers()
 const serials: Serials = new Serials()
 serials.readFile()
 const db = new DataBase()
+
+function getBlankQuery (): LogQuery {
+  return {
+    id: '',
+    type: '',
+    to: '',
+    from: '',
+    dtgTo: cp.getDtg(),
+    dtgFrom: 0,
+    dutyOfficer: '',
+    net: '',
+    content: ''
+  }
+}
 
 const generateAuthToken = (): string => {
   return crypto.randomBytes(30).toString('hex')
@@ -62,6 +77,15 @@ app.get('/transmission/:type', (req, res) => {
   const user: CPUser = users[req.cookies.AuthToken]
   renderTransmission(transmission, cp, user, res)
 })
+
+app.get('/log', (req, res) => {
+  const query: any = req.query as unknown
+  if (query.dtgTo === '') query.dtgFrom = cp.getDtg()
+  if (query.dtgFrom === '') query.dtgFrom = 0
+  renderLog(res, db, getBlankQuery())
+})
+
+app.get('/log/:id', (req, res) => {})
 
 app.get('/test', (req, res) => {
   res.render('test')
@@ -104,6 +128,21 @@ app.get('/update_settings', (req, res) => {
     if (setting === 'net') users[req.cookies.AuthToken].setNet(req.query[setting] as string)
   }
   res.send('success')
+})
+
+/* --- SENDING DATA --- */
+app.get('/query_log', (req, res) => {
+  var query: any = {}
+  if (req.query.reset === 'true') {
+    query = getBlankQuery()
+  } else {
+    query = req.query as unknown
+    if (query.dtgTo === '') query.dtgTo = cp.getDtg()
+    if (query.dtgFrom === '') query.dtgFrom = 0
+  }
+  db.getLog(query, (log) => {
+    res.send(log)
+  })
 })
 
 app.listen(port, () => {
