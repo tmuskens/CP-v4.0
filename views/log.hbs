@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/index">Record Transmission</a>
+                  <a class="nav-link" href="/index">Record Transmission</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link active" href="/log">Log</a>
@@ -58,7 +58,12 @@
                   </thead>
                   <tbody id="log-body">
                     {{#each log}}
+                      {{#ifEquals 0 @index}}
+                      <tr id="{{id}}" class="log-row bg-primary text-light">
+                      {{/ifEquals}}
+                      {{#ifNotEquals 0 @index}}
                       <tr id="{{id}}" class="log-row">
+                      {{/ifNotEquals}}
                         <td>{{dtg}}</td>
                         <td>{{net}}</td>
                         <td>{{sender}}</td>
@@ -120,14 +125,23 @@
                       </td>
                     </tr>
                   </table>
-                  <button type="submit" class="btn btn-sm btn-outline-secondary">Search</button>
-                  <button type="reset" class="btn btn-sm btn-outline-secondary">Clear</button>
+                  <div class="pt-3">
+                    <button type="submit" class="btn btn-sm btn-outline-secondary">Search</button>
+                    <button type="reset" class="btn btn-sm btn-outline-secondary">Clear</button>
+                  </div>
                 </form>
               </div>
             </div>
-            <div class="col-6 h-100 p-3">
-              <iframe class="w-100 h-100 border" src="" id="displayIframe">
-              </iframe>
+            <div class="col-6 h-100 p-3 d-flex flex-column">
+              <div class="flex-grow-1">
+                <iframe class="w-100 h-100 border" name="{{log.1.id}}" src="/log/{{log.1.id}}" id="displayIframe">
+                </iframe>
+              </div>
+              <div class="flex-shrink-1 pt-3">
+                <button id="print" type="button" class="btn btn-sm btn-outline-secondary">Print</button>
+                <button id="edit" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                <button id="delete" type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+              </div>
             </div>
           </div>
         </div>

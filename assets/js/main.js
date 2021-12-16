@@ -6,6 +6,17 @@ function selectTransmission (transmission) {
   document.getElementById('transmissionIframe').setAttribute('src', '/transmission/' + transmission)
 }
 
+function printPrevious () {
+  console.log('i should be printing')
+  const iframe = document.getElementById('prev-return').contentWindow
+  iframe.focus()
+  iframe.print()
+}
+
+$('#print-previous').click(function () {
+  printPrevious()
+})
+
 $('.to-btn').click(function () {
   const to = document.getElementsByName('to')[0]
   $(to).val(this.innerHTML)
@@ -58,9 +69,11 @@ function transmissionFormSubmit (form) {
     type: 'GET',
     data: data
   }).then(function (response) {
-    if (response === 'success') {
-      alert(response)
+    if (response.message === 'success') {
+      const print = $('#print-check-box').is(':checked')
+      document.getElementById('prev-return').setAttribute('src', '/log/' + response.id + '?print=' + print)
       form.reset()
+      transmissionSuccess()
     } else {
       alert(response)
     }
@@ -73,3 +86,4 @@ document.addEventListener('submit', (e) => {
   if (form.name === 'settings') settingsFormSubmit(form)
   e.preventDefault()
 })
+

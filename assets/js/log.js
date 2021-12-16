@@ -1,7 +1,7 @@
 function populateLogTable (log) {
   $('#log-body').empty()
   for (const transmission of log) {
-    $('#log-body').append('<tr id="log-' + transmission.id + `">
+    $('#log-body').append('<tr id="' + transmission.id + `">
       <td>` + transmission.dtg + `</td>
       <td>` + transmission.net + `</td>
       <td>` + transmission.sender + `</td>
@@ -16,8 +16,8 @@ $('.log-row').click(function () {
   $(this).addClass('bg-primary text-light')
   const id = this.id
   document.getElementById('displayIframe').setAttribute('src', '/log/' + id)
+  document.getElementById('displayIframe').setAttribute('name', id)
 })
-
 
 document.addEventListener('reset', (e) => {
   const form = e.target
@@ -43,3 +43,20 @@ document.addEventListener('submit', (e) => {
   e.preventDefault()
 })
 
+$('#print').click(function () {
+  const iframe = document.getElementById('displayIframe').contentWindow
+  iframe.focus()
+  iframe.print()
+})
+
+$('#delete').click(function () {
+  const id = $('#displayIframe').attr('name')
+  $.ajax({
+    url: '/log/delete/' + id,
+    type: 'GET',
+  }).then(function (response) {
+    if (response === 'success')
+    $('#' + id).remove()
+    $('#log-body').children().first().click()
+  })
+})

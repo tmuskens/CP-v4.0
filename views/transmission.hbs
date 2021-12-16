@@ -100,7 +100,7 @@
           <div class="d-flex mt-3 pull-right">
             <button class="me-auto btn btn-sm btn-outline-secondary mx-1" id="print-previous" type="button">Print Previous</button>
             <div class="form-check mx-1" style="padding-top: 0.1rem;">
-              <input class="form-check-input" type="checkbox" name="print" value="" id="print-check-box">
+              <input class="form-check-input" type="checkbox" name="print" id="print-check-box">
               <label class="form-check-label" style="font-size: 0.875rem" for="print-check-box">
                 Print
               </label>
@@ -143,6 +143,7 @@
         <option value="{{this}}">
       {{/each}}
     </datalist>
+    <iframe style="dispaly: none" src="/log/{{prevId}}" id="prev-return" hidden></iframe>
     <script src="/assets/js/helpers.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>

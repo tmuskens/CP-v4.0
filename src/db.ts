@@ -63,17 +63,21 @@ export class DataBase {
   insertTransmission (transmission: FullTransmission, callback: (response: string) => void): void {
     const db = this.#openCon()
     const data = Object.values(transmission)
-    var message = 'incomplete'
+    var response: any = {}
     db.run(`INSERT INTO log 
             (transmission_type, reciever, sender, dtg, duty_officer, net, transmission_data) 
             VALUES (?, ?, ?, ?, ?, ?, ?)`, data, (err: any) => {
       if (err !== null) {
-        message = err.message
+        response.message = err.message
       } else {
-        message = 'success'
+        response.message = 'success'
+        console.log('message transmitted')
       }
-      console.log('message transmitted')
-      callback(message)
+      db.get('SELECT max(id) FROM log', [], (err2: any, result: any) => {
+        if (err2 !== null) response.message = err2.message
+        else response.id = result['max(id)']
+        callback(response)
+      })
     })
     this.#closeCon(db)
   }
@@ -119,5 +123,25 @@ export class DataBase {
       callback(result)
     })
     this.#closeCon(db)
+  }
+
+  deleteReturn (id: number, callback: (message: string) => void): void {
+    const db = this.#openCon()
+    const sql = `DELETE FROM log
+                 WHERE id = ?`
+    db.run(sql, [id], (err: any) => {
+      if (err !== null) throw err
+      const message = 'success'
+      callback(message)
+    })
+  }
+
+  getPrevId (callback: (id: number) => void): void {
+    const db = this.#openCon()
+    const sql = 'SELECT max(id) FROM log'
+    db.get(sql, [], (err: any, result: any) => {
+      if (err !== null) throw err
+      callback(result['max(id)'])
+    })
   }
 }

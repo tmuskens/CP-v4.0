@@ -75,7 +75,9 @@ app.get('/index', (req, res) => {
 app.get('/transmission/:type', (req, res) => {
   const transmission: TransmissionTemplate = serials.getTransmissionFromString(req.params.type)
   const user: CPUser = users[req.cookies.AuthToken]
-  renderTransmission(transmission, cp, user, res)
+  db.getPrevId((id: number) => {
+    renderTransmission(transmission, cp, user, id, res)
+  })
 })
 
 app.get('/log', (req, res) => {
@@ -87,7 +89,12 @@ app.get('/log', (req, res) => {
 
 app.get('/log/:id', (req, res) => {
   const id: number = parseInt(req.params.id)
-  renderPrintout(res, id, db)
+  const print: boolean = (req.query.print === 'true')
+  renderPrintout(res, id, db, print)
+})
+
+app.get('/notes', (req, res) => {
+  res.render('notes', { layout: false })
 })
 
 app.get('/test', (req, res) => {
@@ -131,6 +138,13 @@ app.get('/update_settings', (req, res) => {
     if (setting === 'net') users[req.cookies.AuthToken].setNet(req.query[setting] as string)
   }
   res.send('success')
+})
+
+app.get('/log/delete/:id', (req, res) => {
+  const id = parseInt(req.params.id)
+  db.deleteReturn(id, (message) => {
+    res.send(message)
+  })
 })
 
 /* --- SENDING DATA --- */
