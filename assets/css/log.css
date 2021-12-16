@@ -5,3 +5,36 @@
 .log-row {
   cursor: pointer;
 }
+
+.table-div {
+  max-height: calc(100% - 20.5rem);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#log-table thead {
+  position: sticky; top: 0; 
+  z-index: 1;
+}
+
+#log-table td {
+  border: solid 1px rgb(222, 226, 230)
+}
+
+.left {
+  position: absolute;
+  top: 4.5rem;
+  bottom: 1rem;
+  left: 1rem;
+  right: calc(50% + 1rem);
+  overflow-y: hidden;
+}
+
+.right {
+  position: absolute;
+  top: 4.5rem;
+  bottom: 1rem;
+  right: 1rem;
+  left: calc(50% + 1rem);
+  overflow-y: hidden;
+}

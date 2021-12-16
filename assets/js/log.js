@@ -58,5 +58,6 @@ $('#delete').click(function () {
     if (response === 'success')
     $('#' + id).remove()
     $('#log-body').children().first().click()
+    showToasts()
   })
 })

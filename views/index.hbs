@@ -67,28 +67,19 @@
       </div>
     </div>
     <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-      <div id="success-toast" class="toast" role="alert" data-bs-delay="2000">
+      <div id="success-toast" class="toast bg-white text-dark" role="alert" data-bs-delay="2000">
         <div class="toast-header">
           <strong class="me-auto">Command Post</strong>
           <small>Just then</small>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
         <div class="toast-body">
-          Hello, world! This is a toast message.
+          Transmission recorded
         </div>
       </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.js"></script>
-    
-    <script>
-      function transmissionSuccess () {
-        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
-        var toastList = toastElList.map(function(toastEl) {
-          return new bootstrap.Toast(toastEl)
-        })
-        toastList.forEach(toast => toast.show()) 
-      }
-    </script>
+    <script src="assets/js/helpers.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>
