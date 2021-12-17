@@ -20,6 +20,7 @@ function settingsFormSubmit (e) {
 }
 
 document.addEventListener('submit', (e) => {
+  console.log('form submit')
   const form = e.target
   if (form.name === 'settings') settingsFormSubmit(e)
 })

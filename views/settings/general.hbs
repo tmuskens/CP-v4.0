@@ -41,10 +41,10 @@
           <td class="py-2"><button type="button" id="download-log" class="btn w-100 btn-sm btn-outline-secondary">Reset Log</button></td>
           <td class="px-3"><span style="font-style:italic">Do this at the start of camp!</span></td>
         </tr>
-        <form>
+        <form action="/upload_log" method="POST" enctype="multipart/form-data" name="log_upload" >
           <tr>
             <td colspan="2" class="py-2">
-              <input class="form-control form-control-sm" type="file" id="formFile">
+              <input class="form-control form-control-sm" name="log" type="file" id="log-file">
             </td>
             <td class="px-2"><button type="submit" id="upload-log" class="btn btn-sm btn-outline-secondary">Upload Log</button></td>
           </tr>
@@ -54,5 +54,11 @@
     <script src="/assets/js/helpers.js"></script>
     <script src="/assets/js/settings/general.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
+    {{#if toast}}
+      <script>
+        parent.setToastText('{{toast}}')
+        parent.showToasts()
+      </script>
+    {{/if}}
   </body>
 </html>

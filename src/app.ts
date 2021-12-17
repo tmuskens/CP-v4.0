@@ -13,7 +13,7 @@ import crypto from 'crypto'
 import * as fs from 'fs/promises'
 import * as path from 'path'
 
-
+const multer = require('multer')
 const cookieParser = require('cookie-parser')
 
 console.log('starting server')
@@ -29,6 +29,23 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs')
 app.set('views', './views')
 app.use('/assets', express.static('assets'))
+
+const storage = multer.diskStorage({
+  destination: function (req: any, file: any, cb: any) {
+    cb(null, './data')
+  },
+  filename: function (req: any, file: any, cb: any) {
+    cb(null, 'log.db')
+  }
+})
+
+const dbFilter = function (req: any, file: any, cb: any): void {
+  if (!file.originalname.match(/\.db$/)) {
+    req.fileValidationError = 'Only db files are allowed!'
+    return cb(new Error('Only db files are allowed!'), false)
+  }
+  cb(null, true)
+}
 
 const cp: CommandPost = loadCP()
 const users: Record<string, CPUser> = loadUsers()
@@ -160,6 +177,22 @@ app.get('/log/delete/:id', (req, res) => {
   })
 })
 
+const upload = multer({
+  storage: storage,
+  fileFilter: dbFilter
+}).single('log')
+
+app.post('/upload_log', (req, res) => {
+  upload(req, res, function (err: any) {
+    if (err) {
+      console.log(err)
+      settings.renderSettingsGeneral(res, cp, err.message)
+    } else {
+      settings.renderSettingsGeneral(res, cp, 'New Log Uploaded!')
+    }
+  })
+})
+
 /* --- SENDING DATA --- */
 app.get('/query_log', (req, res) => {
   var query: any = {}
@@ -176,9 +209,12 @@ app.get('/query_log', (req, res) => {
 })
 
 app.get('/download_log', (req, res) => {
-  res.download(path.join(__dirname, '../../data/log.db'), function (err: any) {
-    if (err !== null) {
-      console.log(err)
+  res.download(path.join(__dirname, '../../data/log.db'), function (err) {
+    if (err) {
+      console.log(err.message)
+      res.send(err.message)
+    } else {
+      res.send('success')
     }
   })
 })

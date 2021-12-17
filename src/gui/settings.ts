@@ -7,11 +7,13 @@ function generateSettings (): any {
   }
 }
 
-function generateGeneralSettings (cp: CommandPost): any {
+function generateGeneralSettings (cp: CommandPost, toast?: string): any {
+  console.log(toast)
   return {
     layout: false,
     dutyOfficer: cp.getDutyOfficer(),
-    callsign: cp.getCallsign()
+    callsign: cp.getCallsign(),
+    toast: toast
   }
 }
 
@@ -20,7 +22,7 @@ export class SettingsRenderer {
     res.render('settings', generateSettings())
   }
 
-  renderSettingsGeneral (res: Response<any, Record<string, any>, number>, cp: CommandPost): any {
-    res.render('settings/general', generateGeneralSettings(cp))
+  renderSettingsGeneral (res: Response<any, Record<string, any>, number>, cp: CommandPost, toast?: string): any {
+    res.render('settings/general', generateGeneralSettings(cp, toast))
   }
 }
