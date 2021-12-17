@@ -3,12 +3,16 @@ import { engine } from 'express-handlebars'
 import { renderRecordTransmission } from './gui/main'
 import { renderTransmission } from './gui/transmission'
 import { renderLog, renderPrintout } from './gui/log'
+import { SettingsRenderer } from './gui/settings'
 import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission, LogQuery } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
+import * as fs from 'fs/promises'
+import * as path from 'path'
+
 
 const cookieParser = require('cookie-parser')
 
@@ -31,6 +35,7 @@ const users: Record<string, CPUser> = loadUsers()
 const serials: Serials = new Serials()
 serials.readFile()
 const db = new DataBase()
+const settings = new SettingsRenderer()
 
 function getBlankQuery (): LogQuery {
   return {
@@ -97,6 +102,14 @@ app.get('/notes', (req, res) => {
   res.render('notes', { layout: false })
 })
 
+app.get('/settings', (req, res) => {
+  settings.renderSettings(res)
+})
+
+app.get('/settings/general', (req, res) => {
+  settings.renderSettingsGeneral(res, cp)
+})
+
 app.get('/test', (req, res) => {
   res.render('test')
 })
@@ -159,6 +172,14 @@ app.get('/query_log', (req, res) => {
   }
   db.getLog(query, (log) => {
     res.send(log)
+  })
+})
+
+app.get('/download_log', (req, res) => {
+  res.download(path.join(__dirname, '../../data/log.db'), function (err: any) {
+    if (err !== null) {
+      console.log(err)
+    }
   })
 })
 

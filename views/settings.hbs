@@ -25,7 +25,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/index">Record Transmission</a>
+                <a class="nav-link" href="/index">Record Transmission</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/log">Log</a>
@@ -34,7 +34,7 @@
                 <a class="nav-link" href="/notes">Notes</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/settings">Settings</a>
+                <a class="nav-link active" href="/settings">Settings</a>
               </li>
             </ul>
           </div>
@@ -45,42 +45,38 @@
         <div class="row h-100">
           <div class="col-2 px-3 pt-3 bg-light h-100">
             <div class="d-grid gap-3">
-              <button class="btn btn-primary disabled" aria-current="page">
-                TRANSMISSIONS
+              <button class="btn btn-primary disabled">
+                Settings
               </button>
-              {{#each transmissions}}
-                {{#ifEquals 0 @index}}
-                  <button class="btn btn-outline-secondary transmission-btn active" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
-                {{/ifEquals}}
-                {{#ifNotEquals 0 @index}}
-                  <button class="btn btn-outline-secondary transmission-btn" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
-                {{/ifNotEquals}}
-                    {{transmission}}
-                  </button>
-              {{/each}}
+              <button type="button" class="btn btn-outline-secondary transmission-btn active setting-btn" value="settings">
+                General
+              </button>
             </div>
           </div>
-          <div class="col-10 h-100 p-3">
-            <iframe class="w-100 h-100 border" src="/transmission/{{defaultTransmission}}" id="transmissionIframe">
+          <div class="col-10 h-100 p-3 d-flex flex-column">
+            <div class="bg-primary px-2 pt-2 pb-1">
+              <h5 class="text-light">General</h5>
+            </div>
+            <iframe class="w-100 border flex-grow-1" id="settings-iframe" src="/settings/general">
             </iframe>
           </div>
         </div>
       </div>
     </div>
     <div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
-      <div id="success-toast" class="toast bg-white text-dark" role="alert" data-bs-delay="2000">
+      <div class="toast bg-white text-dark" role="alert" data-bs-delay="2000">
         <div class="toast-header">
           <strong class="me-auto">Command Post</strong>
           <small>Just then</small>
           <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
         </div>
-        <div class="toast-body">
+        <div id="toast-text" class="toast-body">
           Transmission recorded
         </div>
       </div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.js"></script>
     <script src="assets/js/helpers.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/settings/settings.js"></script>
   </body>
 </html>

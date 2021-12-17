@@ -30,7 +30,6 @@ $('.change-setting').click(function () {
   $('#modal-form').modal('show')
 })
 
-
 function settingsFormSubmit (form) {
   if (form.checkValidity()) {
     const data = getFormData(form)
