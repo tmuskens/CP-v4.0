@@ -131,8 +131,13 @@
       </div>
     </div>
         <div class="right d-flex flex-column">
-          <iframe class="w-100 border flex-grow-1" name="{{log.1.id}}" src="/log/{{log.0.id}}" id="displayIframe">
-          </iframe>
+          {{#if log}}
+            <iframe class="w-100 border flex-grow-1" name="{{log.1.id}}" src="/log/{{log.0.id}}" id="displayIframe">
+            </iframe>
+          {{else}}
+            <iframe class="w-100 border flex-grow-1" src="" id="displayIframe">
+            </iframe>
+          {{/if}}
           <div class="pt-3">
             <button id="print" type="button" class="btn btn-sm btn-outline-secondary">Print</button>
             <button id="edit" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>

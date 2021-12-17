@@ -19,6 +19,21 @@ function settingsFormSubmit (e) {
   e.preventDefault()
 }
 
+$('#confirm-reset').click(function () {
+  $.ajax({
+    url: '/reset_log',
+    type: 'GET'
+  }).then(function (response) {
+    if (response === 'success') {
+      parent.setToastText('Log reset')
+      parent.showToasts()
+      $('#confirmation-modal').modal('hide')
+    } else {
+      alert(response)
+    }
+  })
+})
+
 document.addEventListener('submit', (e) => {
   console.log('form submit')
   const form = e.target

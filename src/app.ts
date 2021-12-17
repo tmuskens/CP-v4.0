@@ -193,6 +193,12 @@ app.post('/upload_log', (req, res) => {
   })
 })
 
+app.get('/reset_log', (req, res) => {
+  db.resetDb((response) => {
+    res.send(response)
+  })
+})
+
 /* --- SENDING DATA --- */
 app.get('/query_log', (req, res) => {
   var query: any = {}

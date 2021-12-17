@@ -134,6 +134,7 @@ export class DataBase {
       const message = 'success'
       callback(message)
     })
+    this.#closeCon(db)
   }
 
   getPrevId (callback: (id: number) => void): void {
@@ -142,6 +143,17 @@ export class DataBase {
     db.get(sql, [], (err: any, result: any) => {
       if (err !== null) throw err
       callback(result['max(id)'])
+    })
+    this.#closeCon(db)
+  }
+
+  resetDb (callback: (message: string) => void): void {
+    const db = this.#openCon()
+    const sql = 'DELETE FROM log'
+    db.run(sql, [], (err: any) => {
+      if (err !== null) throw err
+      const message = 'success'
+      callback(message)
     })
   }
 }

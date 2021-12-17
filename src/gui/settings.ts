@@ -8,7 +8,6 @@ function generateSettings (): any {
 }
 
 function generateGeneralSettings (cp: CommandPost, toast?: string): any {
-  console.log(toast)
   return {
     layout: false,
     dutyOfficer: cp.getDutyOfficer(),
