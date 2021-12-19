@@ -127,6 +127,10 @@ app.get('/settings/general', (req, res) => {
   settings.renderSettingsGeneral(res, cp)
 })
 
+app.get('/settings/info', (req, res) => {
+  res.render('settings/info', { layout: false })
+})
+
 app.get('/test', (req, res) => {
   res.render('test')
 })
