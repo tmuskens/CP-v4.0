@@ -1,0 +1,127 @@
+<html style="overflow: scroll!important;">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>KGSACU CP</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <div class="p-3 h-100 w-100 container-fluid">
+      <div class="row">
+        <div class="col">
+          <p>Use this page to edit the Admin Returns and Serials that will be used for the Record Transmission feature. This
+              should be done upon updates of the Signalling Operation Instruction.</p>
+          <p>Use the pane on the right to add, remove or edit Admin Returns. Then select "Edit Serials" in order to change
+              serials. A table will appear in place of this window.</p>
+          <p>Use the "Add Serial" Button to create rows in the table and then edit them with the Serial, the Description, the
+              Data Type (see below) and Options (see below).</p>
+          <p>There are 4 Data Types:</p>
+          <table class="table table-borderless">
+            <tr>
+              <td class="bold">short</td>
+              <td><input class="form-control form-control-sm" type="text" autocomplete="off"/></td>
+            </tr>
+            <tr>
+              <td class="bold">long</td>
+              <td><textarea class="form-control form-control-sm" rows="3" cols="40"></textarea></td>
+            </tr>
+            <tr>
+              <td class="bold">location</td>
+              <td><input class="form-control form-control-sm" type="text" list="locs" autocomplete="off"/>
+                <datalist id="locs">
+                  {{#each locations}}
+                    <option value="{{this}}">
+                  {{/each}}
+                </datalist>
+              </td>
+            </tr>
+            <tr>
+              <td class="bold">option</td>              
+              <td>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                  <label class="form-check-label" for="inlineRadio1">Option 1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  <label class="form-check-label" for="inlineRadio2">Option 2</label>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <p>For the option data type, use the option column to declare the options, seperated by a comma and space.</p>
+          <p><b>This will synchronize across the server, so must only be changed on one laptop.</b></p>
+        </div>
+        <div class="col">
+          <table class="table align-middle">
+            <thead>
+              <th>Returns</th>
+              <th>Options</th>
+            </thead>
+            <tbody id="transmissions-table">
+              {{#each transmissions}}
+                <tr class="transmission-row">
+                  <td>{{this}}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-secondary edit-return">Edit</button>
+                    <button class="btn btn-sm btn-outline-secondary delete-return">Delete</button>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+          <button id="new-return" class="btn btn-sm btn-outline-secondary">New Return</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="serials-modal" tabindex="-1">
+      <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <form action="none" id="validity-form" autocomplete="off">
+            <div class="modal-header">
+              <h5 class="modal-title p-2" id="transmission-name">Transmission Name</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th style="width:10%">Serial</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Options</th>
+                    <th>Controls</th>
+                  </tr>
+                </thead>
+                <tbody id="serials-tbody" class="">
+
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer d-flex">
+              <div id="row-buttons" class="align-self-start" style="display:none">
+                <button type="button" id="serial-up" class="btn btn-secondary">&#8593;</button>
+                <button type="button" id="serial-down" class="btn btn-secondary">&#8595;</button>
+                <button type="button" id="delete-serial" class="btn btn-secondary">Delete Serial</button>
+              </div>
+              <div class="flex-grow-1"></div>
+              <div class="align-self-end">
+                <button type="button" id="add-serial" class="btn btn-secondary">Add Serial</button>
+                <button type="button" id="edit-name" class="btn btn-secondary">Edit Name</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" id="save-return" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/js/helpers.js"></script>
+    <script src="/assets/js/settings/serials.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.js"></script>
+  </body>
+</html>

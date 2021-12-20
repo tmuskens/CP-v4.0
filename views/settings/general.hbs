@@ -1,0 +1,81 @@
+<html style="overflow: scroll!important;">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>KGSACU CP</title>
+    <style>
+      form {
+        all: unset;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="p-3 h-100 w-100">
+      <p>Please be advised that these settings affect the whole server, not this individual machine.</p>
+      <h5>Current Details</h5>
+      <form action="../update_settings" name="settings">
+        <table>
+          <tr>
+            <td>Callsign</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="callsign" value="{{callsign}}" required/></td>
+          </tr>
+          <tr>
+            <td>Duty Officer</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="duty-officer" value="{{dutyOfficer}}" required/></td>
+          </tr>
+        </table>
+        <button type="submit" class="btn btn-sm btn-outline-secondary">Save</button>
+      </form>
+      <br>
+      <br>
+      <h5>Log Settings</h5>
+      <table>
+        <tr>
+          <td><form action="/download_log"><button type="submit" class="btn w-100 btn-sm btn-outline-secondary">Download Log</button></form></td>
+          <td class="px-3"><span style="font-style:italic">Do this at the end of camp!</span></td>
+        </tr>
+        <tr>
+          <td class="py-2"><button type="button"  class="btn w-100 btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#confirmation-modal">Reset Log</button></td>
+          <td class="px-3"><span style="font-style:italic">Do this at the start of camp!</span></td>
+        </tr>
+        <form action="/upload_log" method="POST" enctype="multipart/form-data" name="log_upload" >
+          <tr>
+            <td colspan="2" class="py-2">
+              <input class="form-control form-control-sm" name="log" type="file" id="log-file" required>
+            </td>
+            <td class="px-2"><button type="submit" id="upload-log" class="btn btn-sm btn-outline-secondary">Upload Log</button></td>
+          </tr>
+        </form>
+      </table>
+    </div>
+    <div id="confirmation-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="modal-title" class="modal-title">Confirm Reset</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you would like to reset the log? This action cannot be undone.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="confirm-reset" class="btn btn-primary">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/assets/js/helpers.js"></script>
+    <script src="/assets/js/settings/general.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.js"></script>
+    {{#if toast}}
+      <script>
+        parent.setToastText('{{toast}}')
+        parent.showToasts()
+      </script>
+    {{/if}}
+  </body>
+</html>

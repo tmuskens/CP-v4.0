@@ -1,0 +1,7 @@
+.nopadding {
+  padding: 0 !important;
+}
+
+.btn:disabled, .btn.disabled {
+  opacity: 1 !important;
+}
