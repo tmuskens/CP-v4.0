@@ -83,7 +83,7 @@
                 {{/ifEquals}}
                 {{#ifEquals type 'option'}}
                   {{#each options}}
-                    <div class="form-check">
+                    <div class="form-check form-check-inline">
                       <input class="form-check-input" type="radio" name="{{../serial}}" value="{{this}}" id="{{this}}-radio">
                       <label class="form-check-label" for="{{this}}-radio">
                         {{this}}

@@ -9,4 +9,6 @@ $('.setting-btn').click(function () {
     $(this).removeClass('active')
   })
   $(this).addClass('active')
+  const title = this.innerHTML
+  $('#banner').html(title)
 })

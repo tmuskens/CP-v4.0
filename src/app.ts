@@ -12,8 +12,7 @@ import bodyParser from 'body-parser'
 import crypto from 'crypto'
 import * as fs from 'fs/promises'
 import * as path from 'path'
-
-const multer = require('multer')
+import multer from 'multer'
 const cookieParser = require('cookie-parser')
 
 console.log('starting server')
@@ -131,6 +130,10 @@ app.get('/settings/info', (req, res) => {
   res.render('settings/info', { layout: false })
 })
 
+app.get('/settings/serials', (req, res) => {
+  settings.renderSettingsSerials(res, serials, cp)
+})
+
 app.get('/test', (req, res) => {
   res.render('test')
 })
@@ -222,11 +225,13 @@ app.get('/download_log', (req, res) => {
   res.download(path.join(__dirname, '../../data/log.db'), function (err) {
     if (err) {
       console.log(err.message)
-      res.send(err.message)
-    } else {
-      res.send('success')
     }
   })
+})
+
+app.get('/settings/get_serials', (req, res) => {
+  const name = req.query.name as string
+  res.send(serials.getTransmissionFromString(name))
 })
 
 app.listen(port, () => {
