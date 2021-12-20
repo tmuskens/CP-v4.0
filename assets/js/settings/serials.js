@@ -43,8 +43,20 @@ function createRow (serial, desc, type, options) {
   return row
 }
 
+function createTransmissionRow (name) {
+  const row = `<tr class="transmission-row">
+      <td>${name}</td>
+      <td>
+        <button class="btn btn-sm btn-outline-secondary edit-return">Edit</button>
+        <button class="btn btn-sm btn-outline-secondary delete-return">Delete</button>
+      </td>
+    </tr>`
+  return row
+}
+
 function loadSerialsModal (transmission) {
-  $('transmission-name').html(transmission.transmission)
+  $('#serials-tbody').html('')
+  $('#transmission-name').html(transmission.transmission)
   const serials = transmission.serials
   for (const serial of serials) {
     var options = ''
@@ -57,16 +69,13 @@ function loadSerialsModal (transmission) {
   $('#serials-modal').modal('show')
 }
 
+/* --- MODAL BUTTONS --- */
 $('#transmission-name').click(function () {
   editTransmissionName()
 })
 
 $('#edit-name').click(function () {
   editTransmissionName()
-})
-
-$('#new-return').click(function () {
-  $('#serials-modal').modal('show')
 })
 
 $('#transmission-name').focusout(function () {
@@ -153,13 +162,90 @@ $('#serial-down').click(function () {
   selected.next().after(selected)
 })
 
+$('#save-return').click(function () {
+  if ($('#validity-form').get(0).checkValidity()) {
+    $('.done-btn').click()
+    const name = $('#transmission-name').html()
+    const serials = []
+    $('.serial-row').each(function () {
+      const serial = {
+        serial: $(this).children().eq(0).html(),
+        description: $(this).children().eq(1).html(),
+        type: $(this).children().eq(2).html()
+      }
+      const options = $(this).children().eq(3).html().split(',')
+      if (options !== '') serial.options = options
+      serials.push(serial)
+    })
+    const serialsType = $('#serials-tbody').attr('data-type')
+    const oldName = $('#serials-tbody').attr('data-old-name')
+    $.ajax({
+      url: 'update_serials',
+      type: 'POST',
+      data: {
+        type: serialsType,
+        data: {
+          transmission: name,
+          serials: serials
+        },
+        old: oldName
+      }
+    }).then(function (response) {
+      if (response === 'success') {
+        const row = createTransmissionRow(name)
+        if (serialsType === 'new') {
+          $('#transmissions-table').append(row)
+        } else {
+          $('.transmission-row').each(function () {
+            if ($(this).children().eq(0).html() === oldName) {
+              $(this).replaceWith(row)
+            }
+          })
+        }
+        $('#serials-modal').modal('hide')
+      } else {
+        alert(response)
+      }
+    })
+  }
+})
+
+/* --- MAIN PAGE BUTTONS --- */
+$('#new-return').click(function () {
+  $('#serials-tbody').attr('data-type', 'new')
+  const newReturn = {
+    transmission: 'New Return',
+    serials: []
+  }
+  loadSerialsModal(newReturn)
+})
+
 $('.edit-return').click(function () {
-  const name = this.value
+  const name = $(this).parent().parent().children().eq(0).html()
   $.ajax({
     url: 'get_serials',
     type: 'GET',
     data: { name: name }
   }).then(function (response) {
     loadSerialsModal(response)
+    $('#serials-tbody').attr('data-type', 'edit')
+    $('#serials-tbody').attr('data-old-name', name)
+  })
+})
+
+$('.delete-return').click(function () {
+  const name = $(this).parent().parent().children().eq(0).html()
+  $.ajax({
+    url: 'delete_return',
+    type: 'GET',
+    data: { name: name }
+  }).then(function (response) {
+    if (response === 'success') {
+      $('.transmission-row').each(function () {
+        if ($(this).children().eq(0).html() === name) {
+          $(this).remove()
+        }
+      })
+    } else alert(response)
   })
 })

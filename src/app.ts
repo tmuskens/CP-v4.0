@@ -49,7 +49,7 @@ const dbFilter = function (req: any, file: any, cb: any): void {
 const cp: CommandPost = loadCP()
 const users: Record<string, CPUser> = loadUsers()
 const serials: Serials = new Serials()
-serials.readFile()
+serials.readFile().catch(err => console.log(err))
 const db = new DataBase()
 const settings = new SettingsRenderer()
 
@@ -204,6 +204,26 @@ app.get('/reset_log', (req, res) => {
   db.resetDb((response) => {
     res.send(response)
   })
+})
+
+app.post('/settings/update_serials', (req, res) => {
+  const type: string = req.body.type as string
+  const transmission: any = req.body.data as unknown
+  const tm: TransmissionTemplate = transmission as TransmissionTemplate
+  var message: string = ''
+  if (type === 'edit') {
+    const oldName = req.body.old as string
+    message = serials.updateTransmissionType(tm, oldName)
+  } else if (type === 'new') {
+    message = serials.newTransmissionType(tm)
+  } else throw new Error('undefined update serial type')
+  res.send(message)
+})
+
+app.get('/settings/delete_return', (req, res) => {
+  const name = req.query.name as string
+  const message = serials.deleteTransmissionType(name)
+  res.send(message)
 })
 
 /* --- SENDING DATA --- */
