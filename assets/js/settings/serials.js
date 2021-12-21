@@ -2,6 +2,11 @@ document.addEventListener('submit', (e) => {
   e.preventDefault()
 })
 
+function setShowToast (text) {
+  parent.setToastText(text)
+  parent.showToasts()
+}
+
 function editTransmissionName () {
   $('#transmission-name').attr('contenteditable', 'true')
   $('#transmission-name').focus()
@@ -204,6 +209,7 @@ $('#save-return').click(function () {
           })
         }
         $('#serials-modal').modal('hide')
+        setShowToast('Serials updated!')
       } else {
         alert(response)
       }

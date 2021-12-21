@@ -10,10 +10,10 @@ import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
-import * as fs from 'fs/promises'
 import * as path from 'path'
 import multer from 'multer'
 const cookieParser = require('cookie-parser')
+const favicon = require('serve-favicon')
 
 console.log('starting server')
 const app = express()
@@ -28,6 +28,7 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs')
 app.set('views', './views')
 app.use('/assets', express.static('assets'))
+app.use(favicon(path.join(__dirname, '../../assets/favicon.ico')))
 
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
@@ -105,7 +106,7 @@ app.get('/log', (req, res) => {
   const query: any = req.query as unknown
   if (query.dtgTo === '') query.dtgFrom = cp.getDtg()
   if (query.dtgFrom === '') query.dtgFrom = 0
-  renderLog(res, db, getBlankQuery())
+  renderLog(res, db, getBlankQuery(), cp, serials)
 })
 
 app.get('/log/:id', (req, res) => {
@@ -137,6 +138,14 @@ app.get('/settings/serials', (req, res) => {
 app.get('/edit/:id', (req, res) => {
   const id = parseInt(req.params.id)
   renderEditTransmission(res, db, id, cp, serials)
+})
+
+app.get('/settings/locations', (req, res) => {
+  settings.renderTextSettings(res, 'locations', cp)
+})
+
+app.get('/settings/callsigns', (req, res) => {
+  settings.renderTextSettings(res, 'callsigns', cp)
 })
 
 app.get('/test', (req, res) => {
@@ -250,6 +259,15 @@ app.get('/settings/delete_return', (req, res) => {
   const name = req.query.name as string
   const message = serials.deleteTransmissionType(name)
   res.send(message)
+})
+
+app.get('/settings/update_text_settings/:type', (req, res) => {
+  const type: string = req.params.type
+  const data: string = req.query.data as string
+  const array = data.trim().split('\n').map(s => s.trim())
+  if (type === 'locations') cp.setLocations(array)
+  if (type === 'callsigns') cp.setCallsigns(array)
+  res.send('success')
 })
 
 /* --- SENDING DATA --- */

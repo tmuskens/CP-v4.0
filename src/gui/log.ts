@@ -15,10 +15,12 @@ export function renderPrintout (res: Response<any, Record<string, any>, number>,
   })
 }
 
-export function renderLog (res: Response<any, Record<string, any>, number>, db: DataBase, query: LogQuery): void {
+export function renderLog (res: Response<any, Record<string, any>, number>, db: DataBase, query: LogQuery, cp: CommandPost, serials: Serials): void {
   db.getLog(query, (log) => {
     const obj: any = {
       log: log,
+      callsigns: cp.getCallsigns(),
+      returns: serials.getTransmissionTypes().map(t => t.transmission),
       layout: false
     }
     res.render('log', obj)

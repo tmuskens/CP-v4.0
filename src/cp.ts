@@ -14,6 +14,8 @@ export class CommandPost {
 
   setCallsign (callsign: string): void {
     this.#callsign = callsign
+    const settings = [this.#dutyOfficer, this.#callsign]
+    writeArrayIntoFile(SETTINGS_FILE, settings)
   }
 
   getCallsign (): string {
@@ -22,6 +24,8 @@ export class CommandPost {
 
   setDutyOfficer (dutyOfficer: string): void {
     this.#dutyOfficer = dutyOfficer
+    const settings = [this.#dutyOfficer, this.#callsign]
+    writeArrayIntoFile(SETTINGS_FILE, settings)
   }
 
   getDutyOfficer (): string {
@@ -36,6 +40,7 @@ export class CommandPost {
 
   setCallsigns (callsigns: string[]): void {
     this.#callsigns = callsigns
+    writeArrayIntoFile(CALLSIGNS_FILE, callsigns)
   }
 
   getCallsigns (): string[] {
@@ -44,11 +49,17 @@ export class CommandPost {
 
   setLocations (locations: string[]): void {
     this.#locations = locations
+    writeArrayIntoFile(LOCATIONS_FILE, locations)
   }
 
   getLocations (): string[] {
     return this.#locations
   }
+}
+
+function writeArrayIntoFile (file: string, array: string[]): void {
+  const data: string = array.join('\n')
+  fs.writeFileSync(file, data, 'utf8')
 }
 
 function readTextIntoArray (file: string): string[] {
