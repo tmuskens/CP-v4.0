@@ -106,7 +106,7 @@ app.get('/log', (req, res) => {
   const query: any = req.query as unknown
   if (query.dtgTo === '') query.dtgFrom = cp.getDtg()
   if (query.dtgFrom === '') query.dtgFrom = 0
-  renderLog(res, db, getBlankQuery())
+  renderLog(res, db, getBlankQuery(), cp, serials)
 })
 
 app.get('/log/:id', (req, res) => {
