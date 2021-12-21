@@ -69,11 +69,16 @@
               </tr>
             {{/each}}
           </tbody>
+          <tbody>
+            <tr>
+              <td colspan="5">100 Log Limit. Use query to find older logs.</td>
+            </tr>
+          </tbody>
         </table>
       </div>
       <div class="m-3 border p-3">
         <h6>Query</h6>
-        <form id="log-query" action="/query_log">
+        <form id="log-query" action="/query_log" autocomplete="off">
           <table>
             <tr>
               <td style="width: 8rem">Time (DTG)</td>

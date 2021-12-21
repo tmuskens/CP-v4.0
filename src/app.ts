@@ -5,7 +5,7 @@ import { renderTransmission } from './gui/transmission'
 import { renderLog, renderPrintout, renderEditTransmission } from './gui/log'
 import { SettingsRenderer } from './gui/settings'
 import { Serials, TransmissionTemplate } from './serials'
-import { DataBase, FullTransmission, LogQuery } from './db'
+import { DataBase, FullTransmission, LogQuery, TransmissionUpdate } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 import bodyParser from 'body-parser'
@@ -154,7 +154,6 @@ app.get('/set_net', (req, res) => {
 })
 
 app.get('/record_transmission/:type', (req, res) => {
-  console.log('transmission recieved')
   const to = req.query.to as string
   const from = req.query.from as string
   delete req.query.to
@@ -169,6 +168,28 @@ app.get('/record_transmission/:type', (req, res) => {
     serials: JSON.stringify(req.query)
   }
   db.insertTransmission(transmission, (message: string) => {
+    res.send(message)
+  })
+})
+
+app.get('/update_transmission/:id', (req, res) => {
+  const to = req.query.to as string
+  const from = req.query.from as string
+  const net = req.query.net as string
+  const dutyOfficer = req.query.dutyOfficer as string
+  delete req.query.to
+  delete req.query.from
+  delete req.query.net
+  delete req.query.dutyOfficer
+  const transmission: TransmissionUpdate = {
+    to: to,
+    from: from,
+    dutyOfficer: dutyOfficer,
+    net: net,
+    serials: JSON.stringify(req.query),
+    id: parseInt(req.params.id)
+  }
+  db.updateTransmission(transmission, (message: string) => {
     res.send(message)
   })
 })

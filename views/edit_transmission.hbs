@@ -12,16 +12,16 @@
     <link rel="stylesheet" href="/assets/css/transmission.css">
   </head>
   <body>
-    <form name="transmission" autocomplete="off" action="../record_transmission/{{transmission_type}}">
+    <form id="edit-form" autocomplete="off" name="{{transmission.id}}" action="../update_transmission/{{transmission.id}}">
       <div class="settings border py-1 px-2">
         <table class="row-gap">
           <tr>
             <td style="padding-right: 0.5rem">Duty Officer:</td>
-            <td class="callsign-text"><input class="form-control form-control-sm" value="{{transmission.duty_officer}}"/></td>
+            <td class="callsign-text"><input class="form-control form-control-sm" name="dutyOfficer" value="{{transmission.duty_officer}}"/></td>
           </tr>
           <tr>
             <td style="padding-right: 0.5rem">Net:</td>
-            <td class="callsign-text"><input class="form-control form-control-sm" value="{{transmission.net}}"/></td>
+            <td class="callsign-text"><input class="form-control form-control-sm" name="net" value="{{transmission.net}}"/></td>
           </tr>
         </table>
       </div>
@@ -74,7 +74,7 @@
       {{/each}}
     </datalist>
     <script src="/assets/js/helpers.js"></script>
-    {{!-- <script src="/assets/js/transmission.js"></script> --}}
+    <script src="/assets/js/edit.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.js"></script>
   </body>
 </html>

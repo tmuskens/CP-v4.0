@@ -1,7 +1,7 @@
 function populateLogTable (log) {
   $('#log-body').empty()
   for (const transmission of log) {
-    $('#log-body').append('<tr id="' + transmission.id + `">
+    $('#log-body').append('<tr id="' + transmission.id + `" class="log-row">
       <td>` + transmission.dtg + `</td>
       <td>` + transmission.net + `</td>
       <td>` + transmission.sender + `</td>
@@ -9,14 +9,27 @@ function populateLogTable (log) {
       <td>` + transmission.transmission_type + `</td>
     </tr>`)
   }
+  $('#log-body').children().eq(0).click()
 }
 
-$('.log-row').click(function () {
+function setIframe (id) {
+  document.getElementById('displayIframe').setAttribute('src', '/log/' + id)
+  document.getElementById('displayIframe').setAttribute('name', id)
+}
+
+function hideEditModal () {
+  $('#edit-modal').modal('hide')
+}
+
+function setToast (message) {
+  $('.toast-body').html(message)
+}
+
+$(document).on('click', '.log-row', function () {
   $('.log-row').removeClass('bg-primary text-light')
   $(this).addClass('bg-primary text-light')
   const id = this.id
-  document.getElementById('displayIframe').setAttribute('src', '/log/' + id)
-  document.getElementById('displayIframe').setAttribute('name', id)
+  setIframe(id)
 })
 
 document.addEventListener('reset', (e) => {
@@ -59,6 +72,7 @@ $('#delete').click(function () {
       if (response === 'success') {
         $('#' + id).remove()
         $('#log-body').children().first().click()
+        setToast('Transmission Deleted')
         showToasts()
       }
     })
@@ -71,4 +85,9 @@ $('#edit').click(function () {
     $('#edit-iframe').attr('src', '/edit/' + id)
     $('#edit-modal').modal('show')
   }
+})
+
+$('#save-return').click(function () {
+  const iframe = $('#edit-iframe').get(0)
+  iframe.contentWindow.submitForm()
 })
