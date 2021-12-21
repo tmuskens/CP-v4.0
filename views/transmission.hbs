@@ -13,9 +13,6 @@
     <link rel="stylesheet" href="/assets/css/transmission.css">
   </head>
   <body>
-    <div class="container-fluid bg-primary px-2 pt-2 pb-1">
-      <h5 class="text-light">Record Transmission</h5>
-    </div>
     <div class="settings border py-1 px-2">
       <table class="row-gap">
           <tr>
@@ -38,64 +35,68 @@
           </tr>
         </table>
     </div>
-    <div class="container-fluid h-100 px-3 pt-2">
-      <form name="transmission" autocomplete="off" action="../record_transmission/{{transmission.transmission}}">
-        <table class="row-gap column-gap-sm">
-          <tr>
-            <td style="width: 5rem;"><strong>To</strong></td>
-            <td><input type="text" name="to" list="callsign-options" class="form-control form-control-sm"></td>
-            <td style="width: 4rem;">
-              <button tabindex="-1" type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn to-btn">{{callsign}}</button>
-            </td>
-            <td style="width: 4rem;">
-              <button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">KGS</button>
-            </td>
-          </tr>
-          <tr>
-            <td><strong>From</strong></td>
-            <td><input type="text" name="from" list="callsign-options" class="form-control form-control-sm"></td>
-            <td style="width: 4rem;">
-              <button tabindex="-1" type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn from-btn">{{callsign}}</button>
-            </td>
-          </tr>
-        </table>
-        <h4 class="pt-4">
-          <strong>{{transmission.transmission}}</strong>
-        </h4>
-        <table class="column-gap row-gap w-100">
-          <thead class="grey-row">
-            <th style="width: 4rem">Serial</th>
-            <th style="width: 20rem">Value</th>
-            <th>Description</th>
-          </thead>
-          {{#each transmission.serials}}
+    <form name="transmission" autocomplete="off" action="../record_transmission/{{transmission.transmission}}">
+      <div id="transmission-div">
+        <div id="header-div">
+          <table class="row-gap column-gap-sm">
             <tr>
-              <td><strong>{{serial}}</strong></td>
-              <td>
-                {{#ifEquals type 'short'}}
-                  <input type="text" name="{{serial}}" class="form-control form-control-sm">
-                {{/ifEquals}}
-                {{#ifEquals type 'long'}}
-                  <textarea style="resize:none" class="form-control form-control-sm" name="{{serial}}" rows="3"></textarea>
-                {{/ifEquals}}
-                {{#ifEquals type 'loc'}}
-                  <input type="text" name="{{serial}}" list="location-options" class="form-control form-control-sm">
-                {{/ifEquals}}
-                {{#ifEquals type 'option'}}
-                  {{#each options}}
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="{{../serial}}" value="{{this}}" id="{{this}}-radio">
-                      <label class="form-check-label" for="{{this}}-radio">
-                        {{this}}
-                      </label>
-                    </div>
-                  {{/each}}
-                {{/ifEquals}}
+              <td style="width: 5rem;"><strong>To</strong></td>
+              <td><input type="text" name="to" list="callsign-options" class="form-control form-control-sm"></td>
+              <td style="width: 4rem;">
+                <button tabindex="-1" type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn to-btn">{{callsign}}</button>
               </td>
-              <td>{{description}}</td>
+              <td style="width: 4rem;">
+                <button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">KGS</button>
+              </td>
             </tr>
-          {{/each}}
-        </table>
+            <tr>
+              <td><strong>From</strong></td>
+              <td><input type="text" name="from" list="callsign-options" class="form-control form-control-sm"></td>
+              <td style="width: 4rem;">
+                <button tabindex="-1" type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn from-btn">{{callsign}}</button>
+              </td>
+            </tr>
+          </table>
+          <h4 class="pt-4">
+            <strong>{{transmission.transmission}}</strong>
+          </h4>
+        </div>
+        <div id="input-div">
+          <table id="input-table" class="column-gap row-gap w-100">
+            <thead class="grey-row">
+              <th style="width: 4rem">Serial</th>
+              <th style="width: 20rem">Value</th>
+              <th>Description</th>
+            </thead>
+            {{#each transmission.serials}}
+              <tr>
+                <td><strong>{{serial}}</strong></td>
+                <td>
+                  {{#ifEquals type 'short'}}
+                    <input type="text" name="{{serial}}" class="form-control form-control-sm">
+                  {{/ifEquals}}
+                  {{#ifEquals type 'long'}}
+                    <textarea style="resize:none" class="form-control form-control-sm" name="{{serial}}" rows="3"></textarea>
+                  {{/ifEquals}}
+                  {{#ifEquals type 'loc'}}
+                    <input type="text" name="{{serial}}" list="location-options" class="form-control form-control-sm">
+                  {{/ifEquals}}
+                  {{#ifEquals type 'option'}}
+                    {{#each options}}
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="{{../serial}}" value="{{this}}" id="{{this}}-radio">
+                        <label class="form-check-label" for="{{this}}-radio">
+                          {{this}}
+                        </label>
+                      </div>
+                    {{/each}}
+                  {{/ifEquals}}
+                </td>
+                <td>{{description}}</td>
+              </tr>
+            {{/each}}
+          </table>
+        </div>
         <div class="m-3 footer border-top">
           <div class="d-flex mt-3 pull-right">
             <button class="me-auto btn btn-sm btn-outline-secondary mx-1" id="print-previous" type="button">Print Previous</button>
@@ -109,8 +110,8 @@
             <button class="btn btn-sm btn-outline-secondary mx-1" type="reset">Cancel</button>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
 
     <div id="modal-form" class="modal" tabindex="-1">
       <div class="modal-dialog">

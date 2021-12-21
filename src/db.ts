@@ -43,6 +43,15 @@ export interface LogQuery {
   content: string
 }
 
+export interface TransmissionUpdate {
+  id: number
+  to: string
+  from: string
+  dutyOfficer: string
+  net: string
+  serials: string
+}
+
 export class DataBase {
   #openCon (): any {
     return new sqlite3.Database('./data/log.db', sqlite3.OPEN_READWRITE, (err: any) => {
@@ -71,13 +80,34 @@ export class DataBase {
         response.message = err.message
       } else {
         response.message = 'success'
-        console.log('message transmitted')
+        console.log('transmission recorded')
       }
       db.get('SELECT max(id) FROM log', [], (err2: any, result: any) => {
         if (err2 !== null) response.message = err2.message
         else response.id = result['max(id)']
         callback(response)
       })
+    })
+    this.#closeCon(db)
+  }
+
+  updateTransmission (transmission: TransmissionUpdate, callback: (response: string) => void): void {
+    const db = this.#openCon()
+    const data = Object.values(transmission)
+    var response: any = {}
+    const sql = `UPDATE log SET 
+                  reciever = ?, sender = ?, duty_officer = ?, net = ?,
+                  transmission_data = ?
+                WHERE id = ?`
+    db.run(sql, data, (err: any) => {
+      if (err !== null) {
+        console.log(err)
+        response.message = err.message
+      } else {
+        response.message = 'success'
+        console.log('transmission updated')
+      }
+      callback(response)
     })
     this.#closeCon(db)
   }

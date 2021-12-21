@@ -24,7 +24,7 @@
 .settings {
   position: absolute;
   right: 1rem;
-  top: 3.5rem;
+  top: .75rem;
 }
 
 .footer {
@@ -33,4 +33,31 @@
   left: 0;
   right: 0;
   height: 3rem;
+}
+
+#transmission-div {
+  position: absolute;
+  top: 1rem;
+  bottom: 1rem;
+  right: 1rem;
+  left: 1rem;
+  
+}
+
+#input-div {
+  max-height: calc(100% - 14rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#edit-input-div {
+  max-height: calc(100% - 9rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+#input-table thead {
+  position: sticky; top: 0; 
+  z-index: 1;
 }

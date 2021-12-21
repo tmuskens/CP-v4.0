@@ -174,7 +174,8 @@ $('#save-return').click(function () {
         type: $(this).children().eq(2).html()
       }
       const options = $(this).children().eq(3).html().split(',')
-      if (options !== '') serial.options = options
+      const trimmed = options.map(option => option.trim())
+      if ($(this).children().eq(3).html() !== '') serial.options = trimmed
       serials.push(serial)
     })
     const serialsType = $('#serials-tbody').attr('data-type')
