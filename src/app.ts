@@ -10,11 +10,10 @@ import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
-import * as fs from 'fs/promises'
 import * as path from 'path'
 import multer from 'multer'
 const cookieParser = require('cookie-parser')
-const favicon = require('serve-favicon');
+const favicon = require('serve-favicon')
 
 console.log('starting server')
 const app = express()
@@ -141,6 +140,14 @@ app.get('/edit/:id', (req, res) => {
   renderEditTransmission(res, db, id, cp, serials)
 })
 
+app.get('/settings/locations', (req, res) => {
+  settings.renderTextSettings(res, 'locations', cp)
+})
+
+app.get('/settings/callsigns', (req, res) => {
+  settings.renderTextSettings(res, 'callsigns', cp)
+})
+
 app.get('/test', (req, res) => {
   res.render('test')
 })
@@ -252,6 +259,15 @@ app.get('/settings/delete_return', (req, res) => {
   const name = req.query.name as string
   const message = serials.deleteTransmissionType(name)
   res.send(message)
+})
+
+app.get('/settings/update_text_settings/:type', (req, res) => {
+  const type: string = req.params.type
+  const data: string = req.query.data as string
+  const array = data.trim().split('\n').map(s => s.trim())
+  if (type === 'locations') cp.setLocations(array)
+  if (type === 'callsigns') cp.setCallsigns(array)
+  res.send('success')
 })
 
 /* --- SENDING DATA --- */
