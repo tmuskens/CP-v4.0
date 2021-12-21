@@ -1,5 +1,6 @@
 import { Response } from 'express-serve-static-core'
-import { DataBase, LogQuery } from '../db'
+import { DataBase, LogQuery, FullTransmission2 } from '../db'
+import { CommandPost } from '../cp'
 
 export function renderPrintout (res: Response<any, Record<string, any>, number>, id: number, db: DataBase, print: boolean): void {
   db.getReturn(id, (result) => {
@@ -13,7 +14,7 @@ export function renderPrintout (res: Response<any, Record<string, any>, number>,
   })
 }
 
-function renderLog (res: Response<any, Record<string, any>, number>, db: DataBase, query: LogQuery): void {
+export function renderLog (res: Response<any, Record<string, any>, number>, db: DataBase, query: LogQuery): void {
   db.getLog(query, (log) => {
     const obj: any = {
       log: log,
@@ -23,4 +24,14 @@ function renderLog (res: Response<any, Record<string, any>, number>, db: DataBas
   })
 }
 
-export { renderLog }
+export function renderEditTransmission (res: Response<any, Record<string, any>, number>, db: DataBase, id: number, cp: CommandPost): void {
+  db.getReturn(id, (transmission: FullTransmission2) => {
+    const obj = {
+      locations: cp.getLocations(),
+      callsigns: cp.getCallsigns(),
+      transmission: transmission,
+      layout: false
+    }
+    res.render('edit_transmission', obj)
+  })
+}
