@@ -28,6 +28,7 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs')
 app.set('views', './views')
 app.use('/assets', express.static('assets'))
+app.use('/bootstrap', express.static('node_modules/bootstrap/dist'))
 app.use(favicon(path.join(__dirname, '../../assets/favicon.ico')))
 
 const storage = multer.diskStorage({
