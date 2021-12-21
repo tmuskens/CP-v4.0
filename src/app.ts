@@ -14,6 +14,7 @@ import * as fs from 'fs/promises'
 import * as path from 'path'
 import multer from 'multer'
 const cookieParser = require('cookie-parser')
+const favicon = require('serve-favicon');
 
 console.log('starting server')
 const app = express()
@@ -28,6 +29,7 @@ app.engine('.hbs', engine({
 app.set('view engine', '.hbs')
 app.set('views', './views')
 app.use('/assets', express.static('assets'))
+app.use(favicon(path.join(__dirname, '../../assets/favicon.ico')))
 
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
