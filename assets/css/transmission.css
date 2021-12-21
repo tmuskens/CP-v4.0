@@ -50,6 +50,13 @@
   overflow-x: hidden;
 }
 
+#edit-input-div {
+  max-height: calc(100% - 9rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
 #input-table thead {
   position: sticky; top: 0; 
   z-index: 1;

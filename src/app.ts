@@ -2,7 +2,7 @@ import express from 'express'
 import { engine } from 'express-handlebars'
 import { renderRecordTransmission } from './gui/main'
 import { renderTransmission } from './gui/transmission'
-import { renderLog, renderPrintout } from './gui/log'
+import { renderLog, renderPrintout, renderEditTransmission } from './gui/log'
 import { SettingsRenderer } from './gui/settings'
 import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission, LogQuery } from './db'
@@ -132,6 +132,11 @@ app.get('/settings/info', (req, res) => {
 
 app.get('/settings/serials', (req, res) => {
   settings.renderSettingsSerials(res, serials, cp)
+})
+
+app.get('/edit/:id', (req, res) => {
+  const id = parseInt(req.params.id)
+  renderEditTransmission(res, db, id, cp, serials)
 })
 
 app.get('/test', (req, res) => {

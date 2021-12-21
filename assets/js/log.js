@@ -51,13 +51,24 @@ $('#print').click(function () {
 
 $('#delete').click(function () {
   const id = $('#displayIframe').attr('name')
-  $.ajax({
-    url: '/log/delete/' + id,
-    type: 'GET',
-  }).then(function (response) {
-    if (response === 'success')
-    $('#' + id).remove()
-    $('#log-body').children().first().click()
-    showToasts()
-  })
+  if (id !== undefined) {
+    $.ajax({
+      url: '/log/delete/' + id,
+      type: 'GET',
+    }).then(function (response) {
+      if (response === 'success') {
+        $('#' + id).remove()
+        $('#log-body').children().first().click()
+        showToasts()
+      }
+    })
+  }
+})
+
+$('#edit').click(function () {
+  const id = $('#displayIframe').attr('name')
+  if (id !== undefined) {
+    $('#edit-iframe').attr('src', '/edit/' + id)
+    $('#edit-modal').modal('show')
+  }
 })

@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>KGSACU CP</title>
+    <style>
+      td {
+        white-space: pre-wrap;
+      }
+    </style>
   </head>
   <body>
   <div class="p-3">
@@ -14,28 +19,28 @@
     <table>
       <thead>
         <tr>
-          <td>Log ID:</td>
-          <td>{{ id }}</td>
+          <th>Log ID:</th>
+          <th>{{ id }}</th>
         </tr>
         <tr>
-          <td>From:</td>
-          <td>{{ sender }}</td>
+          <th>From:</th>
+          <th>{{ sender }}</th>
         </tr>
         <tr>
-          <td>To:</td>
-          <td>{{ reciever }}</td>
+          <th>To:</th>
+          <th>{{ reciever }}</th>
         </tr>
         <tr>
-          <td>Time Sent:</td>
-          <td>{{ dtg }}</td>
+          <th>Time Sent:</th>
+          <th>{{ dtg }}</th>
         </tr>
         <tr>
-          <td class="head_column">Duty Officer:</td>
-          <td class="return_data">{{ duty_officer }}</td>
+          <th class="head_column">Duty Officer:</th>
+          <th class="return_data">{{ duty_officer }}</th>
         </tr>
         <tr>
-          <td>Net:</td>
-          <td>{{ net }}</td>
+          <th>Net:</th>
+          <th>{{ net }}</th>
         </tr>
       </thead>
     </table>

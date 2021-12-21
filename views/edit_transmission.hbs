@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- STYLE -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/transmission.css">
+  </head>
+  <body>
+    <form name="transmission" autocomplete="off" action="../record_transmission/{{transmission_type}}">
+      <div class="settings border py-1 px-2">
+        <table class="row-gap">
+          <tr>
+            <td style="padding-right: 0.5rem">Duty Officer:</td>
+            <td class="callsign-text"><input class="form-control form-control-sm" value="{{transmission.duty_officer}}"/></td>
+          </tr>
+          <tr>
+            <td style="padding-right: 0.5rem">Net:</td>
+            <td class="callsign-text"><input class="form-control form-control-sm" value="{{transmission.net}}"/></td>
+          </tr>
+        </table>
+      </div>
+      {{#with transmission}}
+      <div id="transmission-div">
+        <div id="header-div">
+          <table class="row-gap column-gap-sm">
+            <tr>
+              <td style="width: 5rem;"><strong>To</strong></td>
+              <td><input type="text" name="to" list="callsign-options" class="form-control form-control-sm" value="{{reciever}}"></td>
+            </tr>
+            <tr>
+              <td><strong>From</strong></td>
+              <td><input type="text" name="from" list="callsign-options" class="form-control form-control-sm" value="{{sender}}"></td>
+            </tr>
+          </table>
+          <h4 class="pt-4">
+            <strong>{{transmission_type}}</strong>
+          </h4>
+        </div>
+        <div id="edit-input-div">
+          <table id="input-table" class="column-gap row-gap w-100">
+            <thead class="grey-row">
+              <th style="width: 4rem">Serial</th>
+              <th style="width: 20rem">Value</th>
+              <th>Description</th>
+            </thead>
+            {{#each transmission_data}}
+              <tr>
+                <td><strong>{{@key}}</strong></td>
+                <td>
+                  {{#ifEquals type 'short'}}
+                    <input type="text" name="{{@key}}" class="form-control form-control-sm" value="{{data}}">
+                  {{/ifEquals}}
+                  {{#ifEquals type 'long'}}
+                    <textarea style="resize:none" class="form-control form-control-sm" name="{{@key}}" rows="3">{{data}}</textarea>
+                  {{/ifEquals}}
+                </td>
+                <td>{{description}}</td>
+              </tr>
+            {{/each}}
+          </table>
+        </div>
+      </div>
+      {{/with}}
+    </form>
+    <datalist id="callsign-options">
+      {{#each callsigns}}
+        <option value="{{this}}">
+      {{/each}}
+    </datalist>
+    <script src="/assets/js/helpers.js"></script>
+    {{!-- <script src="/assets/js/transmission.js"></script> --}}
+    <script src="/assets/bootstrap/js/bootstrap.js"></script>
+  </body>
+</html>
