@@ -2,9 +2,10 @@ import { Response } from 'express-serve-static-core'
 import { CommandPost } from '../cp'
 import { Serials } from '../serials'
 
-function generateSettings (): any {
+function generateSettings (mode: string): any {
   return {
-    layout: false
+    layout: false,
+    mode: mode
   }
 }
 
@@ -13,7 +14,8 @@ function generateGeneralSettings (cp: CommandPost, toast?: string): any {
     layout: false,
     dutyOfficer: cp.getDutyOfficer(),
     callsign: cp.getCallsign(),
-    toast: toast
+    toast: toast,
+    mode: cp.getMode()
   }
 }
 
@@ -22,7 +24,8 @@ function generateSettingsSerials (serials: Serials, cp: CommandPost): any {
   return {
     layout: false,
     locations: cp.getLocations(),
-    transmissions: transmissions
+    transmissions: transmissions,
+    mode: cp.getMode()
   }
 }
 
@@ -34,13 +37,14 @@ function generateTextSettings (type: string, cp: CommandPost): any {
   return {
     layout: false,
     type: type,
-    data: data
+    data: data,
+    mode: cp.getMode()
   }
 }
 
 export class SettingsRenderer {
-  renderSettings (res: Response<any, Record<string, any>, number>): any {
-    res.render('settings', generateSettings())
+  renderSettings (res: Response<any, Record<string, any>, number>, mode: string): any {
+    res.render('settings', generateSettings(mode))
   }
 
   renderSettingsGeneral (res: Response<any, Record<string, any>, number>, cp: CommandPost, toast?: string): any {

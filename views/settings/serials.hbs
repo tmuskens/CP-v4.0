@@ -1,9 +1,9 @@
-<html style="overflow: scroll!important;">
+<html style="overflow: auto!important;">
 
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>KGSACU CP</title>
     <style>
@@ -67,14 +67,14 @@
                 <tr class="transmission-row">
                   <td>{{this}}</td>
                   <td>
-                    <button class="btn btn-sm btn-outline-secondary edit-return">Edit</button>
-                    <button class="btn btn-sm btn-outline-secondary delete-return">Delete</button>
+                    <button class="btn btn-sm theme-button edit-return">Edit</button>
+                    <button class="btn btn-sm theme-button delete-return">Delete</button>
                   </td>
                 </tr>
               {{/each}}
             </tbody>
           </table>
-          <button id="new-return" class="btn btn-sm btn-outline-secondary">New Return</button>
+          <button id="new-return" class="btn btn-sm theme-button">New Return</button>
         </div>
       </div>
     </div>

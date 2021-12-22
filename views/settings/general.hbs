@@ -1,9 +1,9 @@
-<html style="overflow: scroll!important;">
+<html style="overflow: auto!important;">
 
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>KGSACU CP</title>
     <style>
@@ -27,18 +27,18 @@
             <td class="px-3"><input class="form-control form-control-sm" name="duty-officer" value="{{dutyOfficer}}" required/></td>
           </tr>
         </table>
-        <button type="submit" class="btn btn-sm btn-outline-secondary">Save</button>
+        <button type="submit" class="btn btn-sm theme-button">Save</button>
       </form>
       <br>
       <br>
       <h5>Log Settings</h5>
       <table>
         <tr>
-          <td><form action="/download_log"><button type="submit" class="btn w-100 btn-sm btn-outline-secondary">Download Log</button></form></td>
+          <td><form action="/download_log"><button type="submit" class="btn w-100 btn-sm theme-button">Download Log</button></form></td>
           <td class="px-3"><span style="font-style:italic">Do this at the end of camp!</span></td>
         </tr>
         <tr>
-          <td class="py-2"><button type="button"  class="btn w-100 btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#confirmation-modal">Reset Log</button></td>
+          <td class="py-2"><button type="button"  class="btn w-100 btn-sm theme-button" data-bs-toggle="modal" data-bs-target="#confirmation-modal">Reset Log</button></td>
           <td class="px-3"><span style="font-style:italic">Do this at the start of camp!</span></td>
         </tr>
         <form action="/upload_log" method="POST" enctype="multipart/form-data" name="log_upload" >
@@ -46,7 +46,7 @@
             <td colspan="2" class="py-2">
               <input class="form-control form-control-sm" name="log" type="file" id="log-file" required>
             </td>
-            <td class="px-2"><button type="submit" id="upload-log" class="btn btn-sm btn-outline-secondary">Upload Log</button></td>
+            <td class="px-2"><button type="submit" id="upload-log" class="btn btn-sm theme-button">Upload Log</button></td>
           </tr>
         </form>
       </table>

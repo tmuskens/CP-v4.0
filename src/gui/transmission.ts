@@ -12,7 +12,8 @@ function generateTransmission (transmission: TransmissionTemplate, cp: CommandPo
     locations: cp.getLocations(),
     callsigns: cp.getCallsigns(),
     prevId: prevId,
-    layout: false
+    layout: false,
+    mode: cp.getMode()
   }
 }
 

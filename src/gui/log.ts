@@ -3,13 +3,14 @@ import { DataBase, LogQuery, FullTransmission2 } from '../db'
 import { CommandPost } from '../cp'
 import { Serial, Serials } from '../serials'
 
-export function renderPrintout (res: Response<any, Record<string, any>, number>, id: number, db: DataBase, print: boolean): void {
+export function renderPrintout (res: Response<any, Record<string, any>, number>, id: number, db: DataBase, print: boolean, mode: string): void {
   db.getReturn(id, (result) => {
     result.transmission_data = JSON.parse(result.transmission_data)
     const obj: any = {
       log: result,
       print: print,
-      layout: false
+      layout: false,
+      mode: mode
     }
     res.render('printout', obj)
   })
@@ -21,7 +22,8 @@ export function renderLog (res: Response<any, Record<string, any>, number>, db: 
       log: log,
       callsigns: cp.getCallsigns(),
       returns: serials.getTransmissionTypes().map(t => t.transmission),
-      layout: false
+      layout: false,
+      mode: cp.getMode()
     }
     res.render('log', obj)
   })
@@ -34,7 +36,8 @@ export function renderEditTransmission (res: Response<any, Record<string, any>, 
       locations: cp.getLocations(),
       callsigns: cp.getCallsigns(),
       transmission: combineTransmissionAndSerials(transmission, serials),
-      layout: false
+      layout: false,
+      mode: cp.getMode()
     }
     res.render('edit_transmission', obj)
   })

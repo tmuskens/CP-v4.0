@@ -81,7 +81,7 @@ app.get('/', (req, res) => {
     res.redirect('/index')
     return
   }
-  res.render('net', { layout: false })
+  res.render('net', { layout: false, mode: cp.getMode() })
 })
 
 // Load record transmission page
@@ -91,7 +91,7 @@ app.get('/index', (req, res) => {
     return
   }
   const transmissionTypes = serials.getTransmissionTypes()
-  renderRecordTransmission(transmissionTypes, res)
+  renderRecordTransmission(transmissionTypes, res, cp.getMode())
 })
 
 // Load individual transmission page iframes
@@ -113,15 +113,15 @@ app.get('/log', (req, res) => {
 app.get('/log/:id', (req, res) => {
   const id: number = parseInt(req.params.id)
   const print: boolean = (req.query.print === 'true')
-  renderPrintout(res, id, db, print)
+  renderPrintout(res, id, db, print, cp.getMode())
 })
 
 app.get('/notes', (req, res) => {
-  res.render('notes', { layout: false })
+  res.render('notes', { layout: false, mode: cp.getMode() })
 })
 
 app.get('/settings', (req, res) => {
-  settings.renderSettings(res)
+  settings.renderSettings(res, cp.getMode())
 })
 
 app.get('/settings/general', (req, res) => {
@@ -129,7 +129,7 @@ app.get('/settings/general', (req, res) => {
 })
 
 app.get('/settings/info', (req, res) => {
-  res.render('settings/info', { layout: false })
+  res.render('settings/info', { layout: false, mode: cp.getMode() })
 })
 
 app.get('/settings/serials', (req, res) => {

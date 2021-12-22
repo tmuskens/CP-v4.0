@@ -55,6 +55,11 @@ export class CommandPost {
   getLocations (): string[] {
     return this.#locations
   }
+
+  getMode (): string {
+    if (this.#date.getHours() > 19 || this.#date.getHours() < 6) return 'dark'
+    return 'light'
+  }
 }
 
 function writeArrayIntoFile (file: string, array: string[]): void {

@@ -9,7 +9,7 @@
     <!-- STYLE 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">    
     <link rel="stylesheet" href="/assets/css/transmission.css">
   </head>
   <body>
@@ -17,19 +17,19 @@
       <table class="row-gap">
           <tr>
             <td style="padding-right: 0.5rem">
-              <button name="callsign" type="button" class="btn btn-outline-secondary btn-sm full-btn change-setting" data-bs-toggle="modal" data-bs-target="#modal-form">This Callsign</button>
+              <button name="callsign" type="button" class="btn theme-button btn-sm full-btn change-setting" data-bs-toggle="modal" data-bs-target="#modal-form">This Callsign</button>
             </td>
             <td class="callsign-text">{{callsign}}</td>
           </tr>
           <tr>
             <td style="padding-right: 0.5rem">
-              <button name="duty-officer" id="change-duty-officer" type="button" class="btn btn-outline-secondary btn-sm full-btn change-setting">Duty Officer</button>
+              <button name="duty-officer" id="change-duty-officer" type="button" class="btn theme-button btn-sm full-btn change-setting">Duty Officer</button>
             </td>
             <td class="duty-officer-text">{{dutyOfficer}}</td>
           </tr>
           <tr>
             <td style="padding-right: 0.5rem">
-              <button name="net" id="change-net" type="button" class="btn btn-outline-secondary btn-sm full-btn change-setting">This Net</button>
+              <button name="net" id="change-net" type="button" class="btn theme-button btn-sm full-btn change-setting">This Net</button>
             </td>
             <td class="net-text">{{net}}</td>
           </tr>
@@ -43,17 +43,17 @@
               <td style="width: 5rem;"><strong>To</strong></td>
               <td><input type="text" name="to" list="callsign-options" class="form-control form-control-sm"></td>
               <td style="width: 4rem;">
-                <button tabindex="-1" type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn to-btn">{{callsign}}</button>
+                <button tabindex="-1" type="button" class="callsign-text btn btn-sm theme-button full-btn to-btn">{{callsign}}</button>
               </td>
               <td style="width: 4rem;">
-                <button tabindex="-1" type="button" class="btn btn-sm btn-outline-secondary full-btn to-btn">KGS</button>
+                <button tabindex="-1" type="button" class="btn btn-sm theme-button full-btn to-btn">KGS</button>
               </td>
             </tr>
             <tr>
               <td><strong>From</strong></td>
               <td><input type="text" name="from" list="callsign-options" class="form-control form-control-sm"></td>
               <td style="width: 4rem;">
-                <button tabindex="-1" type="button" class="callsign-text btn btn-sm btn-outline-secondary full-btn from-btn">{{callsign}}</button>
+                <button tabindex="-1" type="button" class="callsign-text btn btn-sm theme-button full-btn from-btn">{{callsign}}</button>
               </td>
             </tr>
           </table>
@@ -99,15 +99,15 @@
         </div>
         <div class="m-3 footer border-top">
           <div class="d-flex mt-3 pull-right">
-            <button class="me-auto btn btn-sm btn-outline-secondary mx-1" id="print-previous" type="button">Print Previous</button>
+            <button class="me-auto btn btn-sm theme-button mx-1" id="print-previous" type="button">Print Previous</button>
             <div class="form-check mx-1" style="padding-top: 0.1rem;">
               <input class="form-check-input" type="checkbox" name="print" id="print-check-box">
               <label class="form-check-label" style="font-size: 0.875rem" for="print-check-box">
                 Print
               </label>
             </div>
-            <button class="btn btn-sm btn-outline-secondary mx-1" type="submit">Record</button>
-            <button class="btn btn-sm btn-outline-secondary mx-1" type="reset">Cancel</button>
+            <button class="btn btn-sm theme-button mx-1" type="submit">Record</button>
+            <button class="btn btn-sm theme-button mx-1" type="reset">Cancel</button>
           </div>
         </div>
       </div>

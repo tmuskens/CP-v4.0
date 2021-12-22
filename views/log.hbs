@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="assets/css/log.css">
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">   
     <title>CP v4.0</title>
   </head>
   <body>
@@ -129,24 +129,24 @@
             </tr>
           </table>
           <div class="pt-3">
-            <button type="submit" class="btn btn-sm btn-outline-secondary">Search</button>
-            <button type="reset" class="btn btn-sm btn-outline-secondary">Clear</button>
+            <button type="submit" class="btn btn-sm theme-button">Search</button>
+            <button type="reset" class="btn btn-sm theme-button">Clear</button>
           </div>
         </form>
       </div>
     </div>
         <div class="right d-flex flex-column">
           {{#if log}}
-            <iframe class="w-100 border flex-grow-1" name="{{log.0.id}}" src="/log/{{log.0.id}}" id="displayIframe">
+            <iframe class="w-100 border border-dark flex-grow-1" name="{{log.0.id}}" src="/log/{{log.0.id}}" id="displayIframe">
             </iframe>
           {{else}}
-            <iframe class="w-100 border flex-grow-1" src="" id="displayIframe">
+            <iframe class="w-100 border border-dark flex-grow-1" src="" id="displayIframe">
             </iframe>
           {{/if}}
           <div class="pt-3">
-            <button id="print" type="button" class="btn btn-sm btn-outline-secondary">Print</button>
-            <button id="edit" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-            <button id="delete" type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+            <button id="print" type="button" class="btn btn-sm theme-button">Print</button>
+            <button id="edit" type="button" class="btn btn-sm theme-button">Edit</button>
+            <button id="delete" type="button" class="btn btn-sm theme-button">Delete</button>
           </div>
         </div>
       </div>

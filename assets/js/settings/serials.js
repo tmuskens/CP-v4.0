@@ -30,8 +30,8 @@ function createInputRow (serial, desc, type, options, rowType) {
     </td>
     <td><input name="options" class="form-control form-control-sm" value="${options}" ${disReq}/></td>
     <td>
-      <button type="submit" class="btn btn-sm btn-outline-secondary done-btn">Done</button>
-      <button type="button" class="btn btn-sm btn-outline-secondary cancel-btn">Cancel</button>
+      <button type="submit" class="btn btn-sm theme-button done-btn">Done</button>
+      <button type="button" class="btn btn-sm theme-button cancel-btn">Cancel</button>
     </td>  
   </tr>`
   return row
@@ -43,7 +43,7 @@ function createRow (serial, desc, type, options) {
     <td class="px-3">${desc}</td>
     <td>${type}</td>
     <td>${options}</td>
-    <td><button class="btn btn-sm btn-outline-secondary edit-btn">Edit</button></td>
+    <td><button class="btn btn-sm theme-button edit-btn">Edit</button></td>
   </tr>`
   return row
 }
@@ -52,8 +52,8 @@ function createTransmissionRow (name) {
   const row = `<tr class="transmission-row">
       <td>${name}</td>
       <td>
-        <button class="btn btn-sm btn-outline-secondary edit-return">Edit</button>
-        <button class="btn btn-sm btn-outline-secondary delete-return">Delete</button>
+        <button class="btn btn-sm theme-button edit-return">Edit</button>
+        <button class="btn btn-sm theme-button delete-return">Delete</button>
       </td>
     </tr>`
   return row
@@ -127,10 +127,10 @@ $(document).on('click', '.serial-row', function () {
   const set = ($(this).hasClass('selected'))
   const editMode = ($('.edit-mode').length > 0)
   $('.serial-row').removeClass('bg-primary text-light selected')
-  $('.serial-row').find('.edit-btn').removeClass('btn-outline-light').addClass('btn-outline-secondary')
+  $('.serial-row').find('.edit-btn').removeClass('btn-outline-light').addClass('theme-button')
   if (!set && !editMode) {
     $(this).addClass('bg-primary text-light selected')
-    $(this).find('.edit-btn').removeClass('btn-outline-secondary').addClass('btn-outline-light')
+    $(this).find('.edit-btn').removeClass('theme-button').addClass('btn-outline-light')
     $('#row-buttons').show()
   } else $('#row-buttons').hide()
 })

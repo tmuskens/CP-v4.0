@@ -5,3 +5,8 @@
 .btn:disabled, .btn.disabled {
   opacity: 1 !important;
 }
+
+.btn-primary {
+  color: white !important;
+}
+
