@@ -37,6 +37,7 @@
                 <a class="nav-link active" href="/settings">Settings</a>
               </li>
             </ul>
+            <button id="connect" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#connect-modal">Connect Another Computer</button>
           </div>
         </div>
       </nav>
@@ -84,6 +85,26 @@
         </div>
         <div id="toast-text" class="toast-body">
           {{toast}}
+        </div>
+      </div>
+    </div>
+    <div id="connect-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Connect another computer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Connect the other device to the peer to peer network or wifi network</li>
+              <li>Open Google Chrome</li>
+              <li>Go to <span>{{url}}</span></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>

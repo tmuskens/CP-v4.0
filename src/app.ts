@@ -8,6 +8,7 @@ import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission, LogQuery, TransmissionUpdate } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
+import { getIp } from './ip'
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
 import * as path from 'path'
@@ -17,7 +18,9 @@ const favicon = require('serve-favicon')
 
 console.log('starting server')
 const app = express()
-const port = 8080
+const port = 80
+const ip = getIp()
+const url = 'http://' + ip
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
@@ -91,7 +94,7 @@ app.get('/index', (req, res) => {
     return
   }
   const transmissionTypes = serials.getTransmissionTypes()
-  renderRecordTransmission(transmissionTypes, res, cp.getMode())
+  renderRecordTransmission(transmissionTypes, res, cp.getMode(), url)
 })
 
 // Load individual transmission page iframes
@@ -107,7 +110,7 @@ app.get('/log', (req, res) => {
   const query: any = req.query as unknown
   if (query.dtgTo === '') query.dtgFrom = cp.getDtg()
   if (query.dtgFrom === '') query.dtgFrom = 0
-  renderLog(res, db, getBlankQuery(), cp, serials)
+  renderLog(res, db, getBlankQuery(), cp, serials, url)
 })
 
 app.get('/log/:id', (req, res) => {
@@ -117,15 +120,15 @@ app.get('/log/:id', (req, res) => {
 })
 
 app.get('/notes', (req, res) => {
-  res.render('notes', { layout: false, mode: cp.getMode() })
+  res.render('notes', { layout: false, mode: cp.getMode(), url: url })
 })
 
 app.get('/settings', (req, res) => {
-  settings.renderSettings(res, cp.getMode())
+  settings.renderSettings(res, cp.getMode(), url)
 })
 
 app.get('/settings/general', (req, res) => {
-  settings.renderSettingsGeneral(res, cp)
+  settings.renderSettingsGeneral(res, cp, url)
 })
 
 app.get('/settings/info', (req, res) => {
@@ -229,9 +232,9 @@ app.post('/upload_log', (req, res) => {
   upload(req, res, function (err: any) {
     if (err) {
       console.log(err)
-      settings.renderSettingsGeneral(res, cp, err.message)
+      settings.renderSettingsGeneral(res, cp, url, err.message)
     } else {
-      settings.renderSettingsGeneral(res, cp, 'New Log Uploaded!')
+      settings.renderSettingsGeneral(res, cp, url, 'New Log Uploaded!')
     }
   })
 })
@@ -299,6 +302,13 @@ app.get('/settings/get_serials', (req, res) => {
   res.send(serials.getTransmissionFromString(name))
 })
 
-app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`)
+app.get('/stop_server', (req, res) => {
+  server.close()
+  setTimeout(function () {
+    console.log('server closed')
+  }, 3000)
+})
+
+const server = app.listen(port, () => {
+  console.log(`server started at http://${ip}:${port}`)
 })
