@@ -8,6 +8,7 @@ import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission, LogQuery, TransmissionUpdate } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
+import { getIp } from './ip'
 import bodyParser from 'body-parser'
 import crypto from 'crypto'
 import * as path from 'path'
@@ -17,7 +18,9 @@ const favicon = require('serve-favicon')
 
 console.log('starting server')
 const app = express()
-const port = 8080
+const port = 80
+const ip = getIp()
+const url = 'http://' + ip
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())
 
@@ -26,10 +29,10 @@ app.engine('.hbs', engine({
   helpers: require('../../assets/exphbshelpers.js').helpers
 }))
 app.set('view engine', '.hbs')
-app.set('views', './views')
+app.set('views', process.cwd() + '/views')
 app.use('/assets', express.static('assets'))
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist'))
-app.use(favicon(path.join(__dirname, '../../assets/favicon.ico')))
+app.use(favicon(path.join(process.cwd(), '/assets/favicon.ico')))
 
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
@@ -81,7 +84,7 @@ app.get('/', (req, res) => {
     res.redirect('/index')
     return
   }
-  res.render('net', { layout: false })
+  res.render('net', { layout: false, mode: cp.getMode() })
 })
 
 // Load record transmission page
@@ -91,7 +94,7 @@ app.get('/index', (req, res) => {
     return
   }
   const transmissionTypes = serials.getTransmissionTypes()
-  renderRecordTransmission(transmissionTypes, res)
+  renderRecordTransmission(transmissionTypes, res, cp.getMode(), url)
 })
 
 // Load individual transmission page iframes
@@ -107,29 +110,29 @@ app.get('/log', (req, res) => {
   const query: any = req.query as unknown
   if (query.dtgTo === '') query.dtgFrom = cp.getDtg()
   if (query.dtgFrom === '') query.dtgFrom = 0
-  renderLog(res, db, getBlankQuery(), cp, serials)
+  renderLog(res, db, getBlankQuery(), cp, serials, url)
 })
 
 app.get('/log/:id', (req, res) => {
   const id: number = parseInt(req.params.id)
   const print: boolean = (req.query.print === 'true')
-  renderPrintout(res, id, db, print)
+  renderPrintout(res, id, db, print, cp.getMode())
 })
 
 app.get('/notes', (req, res) => {
-  res.render('notes', { layout: false })
+  res.render('notes', { layout: false, mode: cp.getMode(), url: url })
 })
 
 app.get('/settings', (req, res) => {
-  settings.renderSettings(res)
+  settings.renderSettings(res, cp.getMode(), url)
 })
 
 app.get('/settings/general', (req, res) => {
-  settings.renderSettingsGeneral(res, cp)
+  settings.renderSettingsGeneral(res, cp, url)
 })
 
 app.get('/settings/info', (req, res) => {
-  res.render('settings/info', { layout: false })
+  res.render('settings/info', { layout: false, mode: cp.getMode() })
 })
 
 app.get('/settings/serials', (req, res) => {
@@ -229,9 +232,9 @@ app.post('/upload_log', (req, res) => {
   upload(req, res, function (err: any) {
     if (err) {
       console.log(err)
-      settings.renderSettingsGeneral(res, cp, err.message)
+      settings.renderSettingsGeneral(res, cp, url, err.message)
     } else {
-      settings.renderSettingsGeneral(res, cp, 'New Log Uploaded!')
+      settings.renderSettingsGeneral(res, cp, url, 'New Log Uploaded!')
     }
   })
 })
@@ -287,7 +290,7 @@ app.get('/query_log', (req, res) => {
 })
 
 app.get('/download_log', (req, res) => {
-  res.download(path.join(__dirname, '../../data/log.db'), function (err) {
+  res.download(path.join(process.cwd(), '/data/log.db'), function (err) {
     if (err) {
       console.log(err.message)
     }
@@ -299,6 +302,13 @@ app.get('/settings/get_serials', (req, res) => {
   res.send(serials.getTransmissionFromString(name))
 })
 
-app.listen(port, () => {
-  console.log(`server started at http://localhost:${port}`)
+app.get('/stop_server', (req, res) => {
+  server.close()
+  setTimeout(function () {
+    console.log('server closed')
+  }, 3000)
+})
+
+const server = app.listen(port, () => {
+  console.log(`server started at http://${ip}:${port}`)
 })

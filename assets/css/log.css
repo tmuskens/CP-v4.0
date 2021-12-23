@@ -38,3 +38,7 @@
   left: calc(50% + 1rem);
   overflow-y: hidden;
 }
+
+.selected td{
+  color: white !important;
+}

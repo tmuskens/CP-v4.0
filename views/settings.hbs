@@ -9,7 +9,7 @@
     <!-- STYLE 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">   
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <title>CP v4.0</title>
@@ -37,30 +37,31 @@
                 <a class="nav-link active" href="/settings">Settings</a>
               </li>
             </ul>
+            <button id="connect" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#connect-modal">Connect Another Computer</button>
           </div>
         </div>
       </nav>
 
       <div class="container-fluid flex-grow-1">
         <div class="row h-100">
-          <div class="col-2 px-3 pt-3 bg-light h-100">
+          <div class="col-2 px-3 pt-3 left-pane h-100">
             <div class="d-grid gap-3">
               <button class="btn btn-primary disabled">
                 Settings
               </button>
-              <button type="button" class="btn btn-outline-secondary transmission-btn active setting-btn" value="general">
+              <button type="button" class="btn theme-button transmission-btn active setting-btn" value="general">
                 General
               </button>
-              <button type="button" class="btn btn-outline-secondary transmission-btn setting-btn" value="info">
+              <button type="button" class="btn theme-button transmission-btn setting-btn" value="info">
                 Software Information
               </button>
-              <button type="button" class="btn btn-outline-secondary transmission-btn setting-btn" value="serials">
+              <button type="button" class="btn theme-button transmission-btn setting-btn" value="serials">
                 Edit Serials
               </button>
-              <button type="button" class="btn btn-outline-secondary transmission-btn setting-btn" value="locations">
+              <button type="button" class="btn theme-button transmission-btn setting-btn" value="locations">
                 Edit Locations
               </button>
-              <button type="button" class="btn btn-outline-secondary transmission-btn setting-btn" value="callsigns">
+              <button type="button" class="btn theme-button transmission-btn setting-btn" value="callsigns">
                 Edit Callsigns
               </button>
             </div>
@@ -69,7 +70,7 @@
             <div class="bg-primary px-2 pt-2 pb-1">
               <h5 id="banner" class="text-light">General</h5>
             </div>
-            <iframe class="w-100 border flex-grow-1" id="settings-iframe" src="/settings/general">
+            <iframe class="w-100 border border-dark flex-grow-1" id="settings-iframe" src="/settings/general">
             </iframe>
           </div>
         </div>
@@ -84,6 +85,26 @@
         </div>
         <div id="toast-text" class="toast-body">
           {{toast}}
+        </div>
+      </div>
+    </div>
+    <div id="connect-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Connect another computer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Connect the other device to the peer to peer network or wifi network</li>
+              <li>Open Google Chrome</li>
+              <li>Go to <span>{{url}}</span></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>

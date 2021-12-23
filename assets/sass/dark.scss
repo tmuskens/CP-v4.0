@@ -1,0 +1,129 @@
+$white:#ddd;
+$gray-200:#8f8f8f;
+$gray-300:#6e6e6f;
+$gray-400:#444445;
+$gray-500:#adb5bd;
+$gray-700:#2d2d2f;
+$gray-700:rgba(50,50,50,0.9);
+$gray-800:#1d1d1f;
+$gray-900:#0e0e0f;
+$secondary:#303030;
+$success:#1c6821;
+$danger:#FF304F;
+$info:#0F81C7;
+$warning:#f0df0b;
+$light:#e8e8e8;
+$dark:#000000;
+$enable-shadows:true;
+$black: #000000;
+$body-bg:#020202;
+$body-color:#cccccc;
+$link-color:#f0f0f0;
+
+
+$link-hover-color:darken($link-color,20%);
+$navbar-dark-hover-color:$white;
+$navbar-light-hover-color:$gray-800;
+$navbar-light-active-color:$gray-800;
+$input-bg:$gray-300;
+$card-border-color:rgba($black,0.6);
+$card-cap-bg:lighten($gray-800,10%);
+$card-bg:lighten($gray-700,4%);
+$nav-divider-color:$gray-500;
+$nav-tabs-link-active-color:$gray-200;
+$list-group-bg:lighten($body-bg,5%);
+$list-group-border-color:rgba($black,0.6);
+$list-group-hover-bg:lighten($body-bg,10%);
+$list-group-active-color:$white;
+$list-group-active-bg:$list-group-hover-bg;
+$list-group-active-border-color:$list-group-border-color;
+$list-group-disabled-color:$gray-800;
+$list-group-disabled-bg:$black;
+$list-group-active-color:#fff;
+$list-group-action-color:#eee;
+$list-group-action-hover-color:#fff;
+$component-active-color:#eee;
+
+$modal-content-bg:$gray-800;
+$jumbotron-bg:$gray-900;
+$dropdown-bg:$gray-800;
+$dropdown-link-color:$gray-200;
+$breadcrumb-bg:$gray-900; 
+$pagination-bg:$gray-900; 
+$progress-bg:$gray-300;
+
+$input-bg:$gray-800;
+$input-focus-bg:$gray-900;
+$input-disabled-bg:#222;
+$input-color:$white;
+$input-focus-color:$gray-200;
+
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+
+.theme-button {
+  color: $gray-200;
+  border-color: $secondary;
+  background-color: $secondary;
+
+  &:hover {
+    color: color-contrast($secondary),;
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .5);
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  &.dropdown-toggle.show {
+    color: color-contrast($secondary);
+    background-color: $secondary;
+    border-color: $secondary;
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($secondary, .5));
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .5);
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $secondary;
+    background-color: transparent;
+  }
+}
+
+.grey-row {
+  background-color: $gray-700;
+}
+
+.left-pane {
+  background-color: $gray-900
+}
+
+
+::-webkit-scrollbar {
+  background-color: $dark;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $secondary;
+}
+
+.border-dark {
+  border-right: 2px solid #6e6e6f !important;
+  border-top: 1px solid #6e6e6f !important;
+  border-bottom: 1px solid #6e6e6f !important;
+  border-left: 1px solid #6e6e6f !important;
+}

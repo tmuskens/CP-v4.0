@@ -1,0 +1,57 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+
+.grey-row {
+  background-color: #d7d8da;
+}
+
+.left-pane {
+  background-color: $light
+}
+
+.theme-button {
+  color: $secondary;
+  border-color: $secondary;
+
+  &:hover {
+    color: color-contrast($secondary);
+    background-color: $secondary;
+    border-color: $secondary;
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .5);
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  &.dropdown-toggle.show {
+    color: color-contrast($secondary);
+    background-color: $secondary;
+    border-color: $secondary;
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow($btn-active-box-shadow, 0 0 0 $btn-focus-width rgba($secondary, .5));
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: 0 0 0 $btn-focus-width rgba($secondary, .5);
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $secondary;
+    background-color: transparent;
+  }
+}
+
+.border-dark {
+  border-right: 2px solid rgb(222, 226, 230) !important;
+  border-top: 1px solid rgb(222, 226, 230) !important;
+  border-bottom: 1px solid rgb(222, 226, 230) !important;
+  border-left: 1px solid rgb(222, 226, 230) !important;
+}

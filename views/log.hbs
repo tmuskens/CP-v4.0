@@ -10,7 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="assets/css/log.css">
     <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">   
     <title>CP v4.0</title>
   </head>
   <body>
@@ -35,6 +35,7 @@
               <a class="nav-link" href="/settings">Settings</a>
             </li>
           </ul>
+          <button id="connect" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#connect-modal">Connect Another Computer</button>
         </div>
       </div>
     </nav>
@@ -56,7 +57,7 @@
           <tbody id="log-body">
             {{#each log}}
               {{#ifEquals 0 @index}}
-              <tr id="{{id}}" class="log-row bg-primary text-light">
+              <tr id="{{id}}" class="log-row bg-primary selected">
               {{/ifEquals}}
               {{#ifNotEquals 0 @index}}
               <tr id="{{id}}" class="log-row">
@@ -129,24 +130,24 @@
             </tr>
           </table>
           <div class="pt-3">
-            <button type="submit" class="btn btn-sm btn-outline-secondary">Search</button>
-            <button type="reset" class="btn btn-sm btn-outline-secondary">Clear</button>
+            <button type="submit" class="btn btn-sm theme-button">Search</button>
+            <button type="reset" class="btn btn-sm theme-button">Clear</button>
           </div>
         </form>
       </div>
     </div>
         <div class="right d-flex flex-column">
           {{#if log}}
-            <iframe class="w-100 border flex-grow-1" name="{{log.0.id}}" src="/log/{{log.0.id}}" id="displayIframe">
+            <iframe class="w-100 border border-dark flex-grow-1" name="{{log.0.id}}" src="/log/{{log.0.id}}" id="displayIframe">
             </iframe>
           {{else}}
-            <iframe class="w-100 border flex-grow-1" src="" id="displayIframe">
+            <iframe class="w-100 border border-dark flex-grow-1" src="" id="displayIframe">
             </iframe>
           {{/if}}
           <div class="pt-3">
-            <button id="print" type="button" class="btn btn-sm btn-outline-secondary">Print</button>
-            <button id="edit" type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-            <button id="delete" type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+            <button id="print" type="button" class="btn btn-sm theme-button">Print</button>
+            <button id="edit" type="button" class="btn btn-sm theme-button">Edit</button>
+            <button id="delete" type="button" class="btn btn-sm theme-button">Delete</button>
           </div>
         </div>
       </div>
@@ -192,6 +193,26 @@
         <option value="{{this}}">
       {{/each}}
     </datalist>
+    <div id="connect-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Connect another computer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Connect the other device to the peer to peer network or wifi network</li>
+              <li>Open Google Chrome</li>
+              <li>Go to <span>{{url}}</span></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="/bootstrap/js/bootstrap.js"></script>
     <script src="/assets/js/helpers.js"></script>
     <script src="/assets/js/log.js"></script>

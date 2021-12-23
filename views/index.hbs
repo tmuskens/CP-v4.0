@@ -6,12 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- STYLE 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <!-- STYLE -->
+    <link rel="stylesheet" href="/assets/css/{{mode}}.css">   
     <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <title>CP v4.0</title>
   </head>
   <body>
@@ -37,23 +34,24 @@
                 <a class="nav-link" href="/settings">Settings</a>
               </li>
             </ul>
+            <button id="connect" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#connect-modal">Connect Another Computer</button>
           </div>
         </div>
       </nav>
 
       <div class="container-fluid flex-grow-1">
         <div class="row h-100">
-          <div class="col-2 px-3 pt-3 bg-light h-100">
+          <div class="col-2 px-3 pt-3 left-pane h-100">
             <div class="d-grid gap-3">
-              <button class="btn btn-primary disabled" aria-current="page">
+              <button class="btn btn-primary disabled" style="color: white !important" aria-current="page">
                 TRANSMISSIONS
               </button>
               {{#each transmissions}}
                 {{#ifEquals 0 @index}}
-                  <button class="btn btn-outline-secondary transmission-btn active" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
+                  <button class="btn theme-button transmission-btn active" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
                 {{/ifEquals}}
                 {{#ifNotEquals 0 @index}}
-                  <button class="btn btn-outline-secondary transmission-btn" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
+                  <button class="btn theme-button transmission-btn" aria-current="page" value="{{transmission}}" onclick="selectTransmission('{{transmission}}')">
                 {{/ifNotEquals}}
                     {{transmission}}
                   </button>
@@ -64,7 +62,7 @@
             <div class="container-fluid bg-primary px-2 pt-2 pb-1">
               <h5 class="text-light">Record Transmission</h5>
             </div>
-            <iframe class="w-100 h-100 border" src="/transmission/{{defaultTransmission}}" id="transmissionIframe">
+            <iframe class="w-100 h-100 border border-dark" src="/transmission/{{defaultTransmission}}" id="transmissionIframe">
             </iframe>
           </div>
         </div>
@@ -79,6 +77,26 @@
         </div>
         <div class="toast-body">
           Transmission recorded
+        </div>
+      </div>
+    </div>
+    <div id="connect-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Connect another computer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <ul>
+              <li>Connect the other device to the peer to peer network or wifi network</li>
+              <li>Open Google Chrome</li>
+              <li>Go to <span>{{url}}</span></li>
+            </ul>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
         </div>
       </div>
     </div>

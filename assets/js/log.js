@@ -26,8 +26,8 @@ function setToast (message) {
 }
 
 $(document).on('click', '.log-row', function () {
-  $('.log-row').removeClass('bg-primary text-light')
-  $(this).addClass('bg-primary text-light')
+  $('.log-row').removeClass('bg-primary selected')
+  $(this).addClass('bg-primary selected')
   const id = this.id
   setIframe(id)
 })

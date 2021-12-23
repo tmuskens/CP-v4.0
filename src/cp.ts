@@ -1,9 +1,9 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-const SETTINGS_FILE = path.join(__dirname, '../../data/settings.txt')
-const CALLSIGNS_FILE = path.join(__dirname, '../../data/callsigns.txt')
-const LOCATIONS_FILE = path.join(__dirname, '../../data/locations.txt')
+const SETTINGS_FILE = path.join(process.cwd(), '/data/settings.txt')
+const CALLSIGNS_FILE = path.join(process.cwd(), '/data/callsigns.txt')
+const LOCATIONS_FILE = path.join(process.cwd(), '/data/locations.txt')
 
 export class CommandPost {
   #callsign: string = ''
@@ -54,6 +54,11 @@ export class CommandPost {
 
   getLocations (): string[] {
     return this.#locations
+  }
+
+  getMode (): string {
+    if (this.#date.getHours() > 19 || this.#date.getHours() < 6) return 'dark'
+    return 'light'
   }
 }
 
