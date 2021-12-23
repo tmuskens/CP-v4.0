@@ -1,2 +1,7 @@
 # CP-v4.0
-Node.js Command Post System for KGSACU
+Node.js TypeScript Command Post System for KGSACU
+
+## To run:
+`npm run i`\
+`npm run compile`\
+`npm run serve`
