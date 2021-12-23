@@ -1,7 +1,7 @@
 import * as fs from 'fs/promises'
 import * as path from 'path'
 
-const SERIALS_FILE = path.join(__dirname, '../../data/serials.json')
+const SERIALS_FILE = path.join(process.cwd(), '/data/serials.json')
 
 enum SerialType {
   Long = 'long',

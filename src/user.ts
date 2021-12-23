@@ -1,7 +1,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 
-const USERS_FILE = path.join(__dirname, '../../data/users.txt')
+const USERS_FILE = path.join(process.cwd(), '/data/users.txt')
 
 export class CPUser {
   #net: string

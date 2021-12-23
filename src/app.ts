@@ -26,10 +26,10 @@ app.engine('.hbs', engine({
   helpers: require('../../assets/exphbshelpers.js').helpers
 }))
 app.set('view engine', '.hbs')
-app.set('views', './views')
+app.set('views', process.cwd() + '/views')
 app.use('/assets', express.static('assets'))
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist'))
-app.use(favicon(path.join(__dirname, '../../assets/favicon.ico')))
+app.use(favicon(path.join(process.cwd(), '/assets/favicon.ico')))
 
 const storage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
@@ -287,7 +287,7 @@ app.get('/query_log', (req, res) => {
 })
 
 app.get('/download_log', (req, res) => {
-  res.download(path.join(__dirname, '../../data/log.db'), function (err) {
+  res.download(path.join(process.cwd(), '/data/log.db'), function (err) {
     if (err) {
       console.log(err.message)
     }

@@ -56,7 +56,7 @@
           <tbody id="log-body">
             {{#each log}}
               {{#ifEquals 0 @index}}
-              <tr id="{{id}}" class="log-row bg-primary text-light">
+              <tr id="{{id}}" class="log-row bg-primary selected">
               {{/ifEquals}}
               {{#ifNotEquals 0 @index}}
               <tr id="{{id}}" class="log-row">
