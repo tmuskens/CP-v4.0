@@ -5,7 +5,7 @@ import { renderTransmission } from './gui/transmission'
 import { renderLog, renderPrintout, renderEditTransmission } from './gui/log'
 import { SettingsRenderer } from './gui/settings'
 import { Serials, TransmissionTemplate } from './serials'
-import { DataBase, FullTransmission, LogQuery, TransmissionUpdate } from './db'
+import { DataBase, FullTransmission, LogQuery, TransmissionUpdate, LogTransmission } from './db'
 import { CommandPost, loadCP } from './cp'
 import { CPUser, loadUsers } from './user'
 import bodyParser from 'body-parser'
@@ -61,7 +61,7 @@ function getBlankQuery (): LogQuery {
     type: '',
     to: '',
     from: '',
-    dtgTo: cp.getDtg(),
+    dtgTo: 999999,
     dtgFrom: 0,
     dutyOfficer: '',
     net: '',
@@ -281,7 +281,7 @@ app.get('/query_log', (req, res) => {
     if (query.dtgTo === '') query.dtgTo = cp.getDtg()
     if (query.dtgFrom === '') query.dtgFrom = 0
   }
-  db.getLog(query, (log) => {
+  db.getLog(query, (log: LogTransmission[]) => {
     res.send(log)
   })
 })

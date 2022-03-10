@@ -2,7 +2,7 @@ function populateLogTable (log) {
   $('#log-body').empty()
   for (const transmission of log) {
     $('#log-body').append('<tr id="' + transmission.id + `" class="log-row">
-      <td>` + transmission.dtg + `</td>
+      <td>` + addLeadingZero(transmission.dtg) + `</td>
       <td>` + transmission.net + `</td>
       <td>` + transmission.sender + `</td>
       <td>` + transmission.reciever + `</td>
