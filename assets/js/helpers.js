@@ -17,3 +17,8 @@ function showToasts () {
   })
   toastList.forEach(toast => toast.show())
 }
+
+function addLeadingZero (dtg) {
+  const str = dtg.toString()
+  return (str.length === 5) ? '0' + str : str
+}

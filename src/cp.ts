@@ -38,6 +38,11 @@ export class CommandPost {
             this.#date.getMinutes())
   }
 
+  getDtgString (): string {
+    const dtg: string = (this.getDtg()).toString()
+    return (dtg.length === 5) ? '0' + dtg : dtg
+  }
+
   setCallsigns (callsigns: string[]): void {
     this.#callsigns = callsigns
     writeArrayIntoFile(CALLSIGNS_FILE, callsigns)

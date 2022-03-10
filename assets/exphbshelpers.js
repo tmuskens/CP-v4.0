@@ -6,6 +6,10 @@ var register = function (Handlebars) {
     },
     ifNotEquals: function (arg1, arg2, options) {
       return (arg1 !== arg2) ? options.fn(this) : options.inverse(this)
+    },
+    addLeadingZero: function (dtg) {
+      const str = dtg.toString()
+      return (str.length === 5) ? '0' + str : str
     }
   }
 

@@ -10,7 +10,7 @@
     "coverage": "jest --collect-coverage",
     "serve": "node dist/src/app.js",
     "sass": "npx sass assets/sass/light.scss:assets/css/light.css assets/sass/dark.scss:assets/css/dark.css",
-    "package": "npx pkg dist/src/app.js --target macos" 
+    "package": "npx pkg dist/src/app.js --target macos -o cp-v4" 
   },
   "repository": {
     "type": "git",
@@ -48,5 +48,8 @@
     "serve-favicon": "^2.5.0",
     "sqlite3": "^4.2.0",
     "ts-standard": "^11.0.0"
+  },
+  "pkg": {
+    "js": "js/**/*.js"
   }
 }

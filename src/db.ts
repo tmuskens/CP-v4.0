@@ -1,5 +1,6 @@
 const sqlite3 = require('sqlite3').verbose()
 
+/* @brief Application transmission format */
 export interface FullTransmission {
   id?: number
   type: string
@@ -11,6 +12,7 @@ export interface FullTransmission {
   serials: string
 }
 
+/* @brief Database transmission format */
 export interface FullTransmission2 {
   id?: number
   transmission_type: string
@@ -22,6 +24,7 @@ export interface FullTransmission2 {
   transmission_data: string
 }
 
+/* @brief Data returned on Log Query */
 export interface LogTransmission {
   id: number
   dtg: number
@@ -31,6 +34,7 @@ export interface LogTransmission {
   transmission_type: string
 }
 
+/* @brief Query accepted by Log */
 export interface LogQuery {
   id: string
   type: string
@@ -112,6 +116,17 @@ export class DataBase {
     this.#closeCon(db)
   }
 
+  getLogAll (query: LogQuery, callback: (log: LogTransmission[]) => void): void {
+    const db = this.#openCon()
+    const sql = 'SELECT * FROM log ORDER BY id DESC LIMIT 100;'
+
+    db.all(sql, [], (err: any, rows: any) => {
+      if (err !== null) throw err
+      callback(rows)
+    })
+    this.#closeCon(db)
+  }
+
   getLog (query: LogQuery, callback: (log: LogTransmission[]) => void): void {
     const db = this.#openCon()
     const select = `SELECT id, 
@@ -133,14 +148,15 @@ export class DataBase {
     const end = `ORDER BY id DESC
                  LIMIT 100;`
     const sql = (select + where + idQuery + end)
-    const params = ['%' + query.type + '%', '%' + query.to + '%', '%' + query.from + '%', query.dtgFrom,
-      query.dtgTo, '%' + query.dutyOfficer + '%', '%' + query.net + '%', '%' + query.content + '%', '%' + query.id + '%']
+    const params = ['%' + query.type + '%', '%' + query.to + '%', '%' + query.from + '%', query.dtgFrom, query.dtgTo,
+      '%' + query.dutyOfficer + '%', '%' + query.net + '%', '%' + query.content + '%', '%' + query.id + '%']
 
     db.all(sql, params, (err: any, rows: any) => {
       if (err !== null) throw err
       callback(rows)
     })
     this.#closeCon(db)
+    // (dtg BETWEEN ? AND ?) AND
   }
 
   getReturn (id: number, callback: (log: FullTransmission2) => void): void {
