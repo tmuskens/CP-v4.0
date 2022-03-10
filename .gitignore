@@ -4,3 +4,7 @@ assets/.DS_Store
 .DS_Store
 app
 cp-v4
+assets/css/dark.css.map
+assets/css/dark.css
+assets/css/light.css.map
+assets/css/light.css
