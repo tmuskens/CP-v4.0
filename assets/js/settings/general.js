@@ -39,3 +39,10 @@ document.addEventListener('submit', (e) => {
   const form = e.target
   if (form.name === 'settings') settingsFormSubmit(e)
 })
+
+$('#stop-server').click(function () {
+  $.ajax({
+    url: '/stop_server',
+    type: 'GET'
+  })
+})
