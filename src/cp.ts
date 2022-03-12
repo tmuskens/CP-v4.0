@@ -1,5 +1,6 @@
-import * as fs from 'fs'
 import * as path from 'path'
+
+import { writeArrayIntoFile, readTextIntoArray } from './utils'
 
 const SETTINGS_FILE = path.join(process.cwd(), '/data/settings.txt')
 const CALLSIGNS_FILE = path.join(process.cwd(), '/data/callsigns.txt')
@@ -65,16 +66,6 @@ export class CommandPost {
     if (this.#date.getHours() > 19 || this.#date.getHours() < 6) return 'dark'
     return 'light'
   }
-}
-
-function writeArrayIntoFile (file: string, array: string[]): void {
-  const data: string = array.join('\n')
-  fs.writeFileSync(file, data, 'utf8')
-}
-
-function readTextIntoArray (file: string): string[] {
-  const data: string = fs.readFileSync(file).toString('utf-8')
-  return data.split('\n')
 }
 
 export function loadCP (): CommandPost {

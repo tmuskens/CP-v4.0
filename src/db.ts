@@ -1,4 +1,5 @@
 const sqlite3 = require('sqlite3').verbose()
+import { Location } from './map'
 
 /* @brief Application transmission format */
 export interface FullTransmission {
@@ -189,6 +190,35 @@ export class DataBase {
     db.get(sql, [], (err: any, result: any) => {
       if (err !== null) throw err
       callback(result['max(id)'])
+    })
+    this.#closeCon(db)
+  }
+
+  getLocCallsigns (locReturn: string, callback: (callsigns: string[]) => void): void {
+    const db = this.#openCon()
+    const sql = 'SELECT DISTINCT sender FROM log WHERE transmission_type = ? ORDER BY sender'
+    db.all(sql, [locReturn], (err: any, result: any) => {
+      if (err !== null) throw err
+      callback(result.map((row: { sender: string }) => row.sender))
+    })
+    this.#closeCon(db)
+  }
+
+  getLocations (locReturn: string, locSerial: string, callback: (locs: Location[]) => void): void {
+    const db = this.#openCon()
+    const sql = `SELECT log.sender, log.transmission_data, log.dtg, log.id 
+                 FROM log 
+                 INNER JOIN 
+                  (SELECT sender, MAX(id) AS maxId
+                   FROM log
+                   WHERE transmission_type = ?
+                   GROUP BY sender) newTable
+                 ON log.sender = newTable.sender
+                 AND log.id = newTable.maxId
+                 ORDER BY log.sender`
+    db.all(sql, [locReturn], (err: any, result: any) => {
+      if (err !== null) throw err
+      callback(result)
     })
     this.#closeCon(db)
   }

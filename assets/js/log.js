@@ -32,6 +32,7 @@ $(document).on('click', '.log-row', function () {
   setIframe(id)
 })
 
+/* Clear log query */
 document.addEventListener('reset', (e) => {
   const form = e.target
   $.ajax({
@@ -43,6 +44,7 @@ document.addEventListener('reset', (e) => {
   })
 })
 
+/* Submit log query */
 document.addEventListener('submit', (e) => {
   const form = e.target
   const data = getFormData(form)

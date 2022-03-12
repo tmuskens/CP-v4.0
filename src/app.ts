@@ -3,6 +3,8 @@ import { engine } from 'express-handlebars'
 import { renderRecordTransmission } from './gui/main'
 import { renderTransmission } from './gui/transmission'
 import { renderLog, renderPrintout, renderEditTransmission } from './gui/log'
+import { renderMap } from './gui/map'
+import { Map, loadMapData, Location } from './map'
 import { SettingsRenderer } from './gui/settings'
 import { Serials, TransmissionTemplate } from './serials'
 import { DataBase, FullTransmission, LogQuery, TransmissionUpdate, LogTransmission } from './db'
@@ -54,6 +56,7 @@ const dbFilter = function (req: any, file: any, cb: any): void {
 const cp: CommandPost = loadCP()
 const users: Record<string, CPUser> = loadUsers()
 const serials: Serials = new Serials()
+const map: Map = loadMapData()
 serials.readFile().catch(err => console.log(err))
 const db = new DataBase()
 const settings = new SettingsRenderer()
@@ -117,6 +120,16 @@ app.get('/log/:id', (req, res) => {
   const id: number = parseInt(req.params.id)
   const print: boolean = (req.query.print === 'true')
   renderPrintout(res, id, db, print, cp.getMode())
+})
+
+app.get('/map', (req, res) => {
+  db.getLocCallsigns(map.getLocReturn(), (callsigns: String[]) => {
+    // console.log(callsigns)
+    renderMap(db, res, cp.getMode())
+  })
+  db.getLocations(map.getLocReturn(), map.getLocSerial(), (locs: Location[]) => {
+    console.log(locs)
+  })
 })
 
 app.get('/notes', (req, res) => {
@@ -281,7 +294,7 @@ app.get('/query_log', (req, res) => {
     query = getBlankQuery()
   } else {
     query = req.query as unknown
-    if (query.dtgTo === '') query.dtgTo = cp.getDtg()
+    if (query.dtgTo === '') query.dtgTo = 999999
     if (query.dtgFrom === '') query.dtgFrom = 0
   }
   db.getLog(query, (log: LogTransmission[]) => {
