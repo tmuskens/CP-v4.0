@@ -123,12 +123,8 @@ app.get('/log/:id', (req, res) => {
 })
 
 app.get('/map', (req, res) => {
-  db.getLocCallsigns(map.getLocReturn(), (callsigns: String[]) => {
-    // console.log(callsigns)
-    renderMap(db, res, cp.getMode())
-  })
-  db.getLocations(map.getLocReturn(), map.getLocSerial(), (locs: Location[]) => {
-    console.log(locs)
+  db.getLocations(map.getLocReturn(), map.getLocSerial(), cp.getDtg(), (locs: Location[]) => {
+    renderMap(locs, cp.getDtg(), res, cp.getMode())
   })
 })
 

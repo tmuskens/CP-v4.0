@@ -9,6 +9,7 @@ export interface Location {
   callsign: string
   gr: number /* 6 figure grid reference */
   dtg: number
+  id: number
 }
 
 export class Map {

@@ -60,33 +60,27 @@
         <table class="table table-striped table-sm table-hover m-0" id="log-table">
           <thead class="bg-secondary border-secondary text-light">
             <tr>
-              <th>Time</th>
-              <th>Net</th>
-              <th>From</th>
-              <th>To</th>
-              <th>Type</th>
+              <th>Show</th>
+              <th>Callsign</th>
+              <th>Grid Reference</th>
+              <th>DTG</th>
+              <th>Time Since</th>
+              <th>LogID</th>
             </tr>
           </thead>
           <tbody id="log-body">
-            {{#each log}}
-              {{#ifEquals 0 @index}}
-              <tr id="{{id}}" class="log-row bg-primary selected">
-              {{/ifEquals}}
+            {{#each locs}}
               {{#ifNotEquals 0 @index}}
               <tr id="{{id}}" class="log-row">
               {{/ifNotEquals}}
-                <td>{{addLeadingZero dtg}}</td>
-                <td>{{net}}</td>
-                <td>{{sender}}</td>
-                <td>{{reciever}}</td>
-                <td>{{transmission_type}}</td>
+                <td></td>
+                <td>{{callsign}}</td>
+                <td>{{gr}}</td>
+                <td>{{dtg}}</td>
+                <td>{{timeDiff ../dtg dtg}}</td>
+                <td>{{id}}</td>
               </tr>
             {{/each}}
-          </tbody>
-          <tbody>
-            <tr>
-              <td colspan="5">100 Log Limit. Use query to find older logs.</td>
-            </tr>
           </tbody>
         </table>
       </div>

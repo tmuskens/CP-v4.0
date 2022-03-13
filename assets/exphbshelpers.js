@@ -10,6 +10,16 @@ var register = function (Handlebars) {
     addLeadingZero: function (dtg) {
       const str = dtg.toString()
       return (str.length === 5) ? '0' + str : str
+    },
+    timeDiff: function (currentDtg, dtg) {
+      var hours = ~~(currentDtg / 100) - ~~(dtg / 100)
+      var mins = currentDtg % 100 - dtg % 100
+      console.log(hours, ' ', mins)
+      while (mins < 0) {
+        mins += 60
+        hours -= 1
+      }
+      return hours + 'h ' + mins + 'm'
     }
   }
 

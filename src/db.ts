@@ -1,5 +1,6 @@
-const sqlite3 = require('sqlite3').verbose()
 import { Location } from './map'
+import { grToNum } from './utils'
+const sqlite3 = require('sqlite3').verbose()
 
 /* @brief Application transmission format */
 export interface FullTransmission {
@@ -194,31 +195,37 @@ export class DataBase {
     this.#closeCon(db)
   }
 
-  getLocCallsigns (locReturn: string, callback: (callsigns: string[]) => void): void {
-    const db = this.#openCon()
-    const sql = 'SELECT DISTINCT sender FROM log WHERE transmission_type = ? ORDER BY sender'
-    db.all(sql, [locReturn], (err: any, result: any) => {
-      if (err !== null) throw err
-      callback(result.map((row: { sender: string }) => row.sender))
-    })
-    this.#closeCon(db)
-  }
-
-  getLocations (locReturn: string, locSerial: string, callback: (locs: Location[]) => void): void {
+  /* Gets most recent locstat for each callsign
+    location must have been sent in the past 24 hours
+  */
+  getLocations (locReturn: string, locSerial: string, dtg: number, callback: (locs: Location[]) => void): void {
+    const prevDtg: number = dtg - 10000
     const db = this.#openCon()
     const sql = `SELECT log.sender, log.transmission_data, log.dtg, log.id 
                  FROM log 
                  INNER JOIN 
                   (SELECT sender, MAX(id) AS maxId
                    FROM log
-                   WHERE transmission_type = ?
+                   WHERE (transmission_type = ? AND (dtg BETWEEN ? AND ?))
                    GROUP BY sender) newTable
                  ON log.sender = newTable.sender
                  AND log.id = newTable.maxId
                  ORDER BY log.sender`
-    db.all(sql, [locReturn], (err: any, result: any) => {
+    db.all(sql, [locReturn, prevDtg, dtg], (err: any, result: any) => {
       if (err !== null) throw err
-      callback(result)
+      const locs: Location[] = []
+      for (const row of result) {
+        const data: any = JSON.parse(row.transmission_data)
+        const gr: number = grToNum(data[locSerial])
+        const current: Location = {
+          callsign: row.sender,
+          id: row.id,
+          gr: gr,
+          dtg: row.dtg
+        }
+        locs.push(current)
+      }
+      callback(locs)
     })
     this.#closeCon(db)
   }
