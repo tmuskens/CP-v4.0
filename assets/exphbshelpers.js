@@ -14,7 +14,6 @@ var register = function (Handlebars) {
     timeDiff: function (currentDtg, dtg) {
       var hours = ~~(currentDtg / 100) - ~~(dtg / 100)
       var mins = currentDtg % 100 - dtg % 100
-      console.log(hours, ' ', mins)
       while (mins < 0) {
         mins += 60
         hours -= 1

@@ -124,7 +124,7 @@ app.get('/log/:id', (req, res) => {
 
 app.get('/map', (req, res) => {
   db.getLocations(map.getLocReturn(), map.getLocSerial(), cp.getDtg(), (locs: Location[]) => {
-    renderMap(locs, cp.getDtg(), res, cp.getMode())
+    renderMap(locs, cp, res)
   })
 })
 

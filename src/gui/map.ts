@@ -1,5 +1,6 @@
 import { Response } from 'express-serve-static-core'
 import { Location } from '../map'
+import { CommandPost } from '../cp'
 
 function generateMap (locs: Location[], dtg: number, mode: string): any {
   return {
@@ -10,8 +11,8 @@ function generateMap (locs: Location[], dtg: number, mode: string): any {
   }
 }
 
-function renderMap (locs: Location[], dtg: number, res: Response<any, Record<string, any>, number>, mode: string): void {
-  res.render('map', generateMap(locs, dtg, mode))
+function renderMap (locs: Location[], cp: CommandPost, res: Response<any, Record<string, any>, number>): void {
+  res.render('map', generateMap(locs, cp.getDtg(), cp.getMode()))
 }
 
 export { renderMap }

@@ -11,7 +11,6 @@ export class CommandPost {
   #dutyOfficer: string = ''
   #callsigns: string[] = []
   #locations: string[] = []
-  #date: Date = new Date()
 
   setCallsign (callsign: string): void {
     this.#callsign = callsign
@@ -34,9 +33,10 @@ export class CommandPost {
   }
 
   getDtg (): number {
-    return (this.#date.getDate() * 10000 +
-            this.#date.getHours() * 100 +
-            this.#date.getMinutes())
+    const date: Date = new Date()
+    return (date.getDate() * 10000 +
+            date.getHours() * 100 +
+            date.getMinutes())
   }
 
   getDtgString (): string {
@@ -63,7 +63,8 @@ export class CommandPost {
   }
 
   getMode (): string {
-    if (this.#date.getHours() > 19 || this.#date.getHours() < 6) return 'dark'
+    const date: Date = new Date()
+    if (date.getHours() > 19 || date.getHours() < 6) return 'dark'
     return 'light'
   }
 }

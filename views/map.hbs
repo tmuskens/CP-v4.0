@@ -20,6 +20,36 @@
 
     <style>
       #map { height: 100%; }
+      /*Wraperclass for the divicon*/
+      .map-label {
+        position: absolute;
+        bottom: 0;left: -50%;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+      /*Wrap the content of the divicon (text) in this class*/
+      .map-label-content {
+        order: 1;
+        position: relative; left: -50%;
+        background-color: #fff;
+        border-radius: 5px;
+        border-width: 2px;
+        border-style: solid;
+        border-color: #444;
+        padding: 3px;
+        white-space: nowrap;
+        color: black;
+      }
+      /*Add this arrow*/
+      .map-label-arrow {
+        order: 2;
+        width: 0px; height: 0px; left: 50%;
+        border-style: solid;
+        border-color: #444 transparent transparent transparent;
+        border-width: 10px 6px 0 6px; /*[first number is height, second/fourth are rigth/left width]*/
+        margin-left: -6px;
+      }
     </style>
     <title>CP v4.0</title>
   </head>
@@ -63,7 +93,6 @@
               <th>Show</th>
               <th>Callsign</th>
               <th>Grid Reference</th>
-              <th>DTG</th>
               <th>Time Since</th>
               <th>LogID</th>
             </tr>
@@ -76,7 +105,6 @@
                 <td></td>
                 <td>{{callsign}}</td>
                 <td>{{gr}}</td>
-                <td>{{dtg}}</td>
                 <td>{{timeDiff ../dtg dtg}}</td>
                 <td>{{id}}</td>
               </tr>
@@ -151,19 +179,6 @@
     </div>
     <script src="/bootstrap/js/bootstrap.js"></script>
     <script src="/assets/js/helpers.js"></script>
-    <script>
-      var bounds = [[0, 0], [651, 564]]
-      var map = L.map('map', {
-        crs: L.CRS.EPSG4326, // CRS.Simple, which represents a square grid:
-        minZoom: 0,
-        maxZoom: 10,
-        maxBounds: bounds,
-        maxBoundsViscosity: 1.0
-      })
-      L.imageOverlay('/assets/maps/Singleton.png', bounds).addTo(map)
-      map.fitBounds(bounds, {animation: false});
-
-
-    </script>
+    <script src="/assets/js/map.js"></script>
   </body>
 </html>
