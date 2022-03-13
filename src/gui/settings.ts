@@ -1,6 +1,7 @@
 import { Response } from 'express-serve-static-core'
 import { CommandPost } from '../cp'
 import { Serials } from '../serials'
+import { MapSettings } from '../map'
 
 function generateSettings (mode: string, url: string): any {
   return {
@@ -44,6 +45,14 @@ function generateTextSettings (type: string, cp: CommandPost): any {
   }
 }
 
+function generateMapSettings (mode: string, settings: MapSettings): any {
+  return {
+    layout: false,
+    map: settings,
+    mode: mode
+  }
+}
+
 export class SettingsRenderer {
   renderSettings (res: Response<any, Record<string, any>, number>, mode: string, url: string): any {
     res.render('settings', generateSettings(mode, url))
@@ -59,5 +68,9 @@ export class SettingsRenderer {
 
   renderTextSettings (res: Response<any, Record<string, any>, number>, type: string, cp: CommandPost): void {
     res.render('settings/text_settings', generateTextSettings(type, cp))
+  }
+
+  renderMapSettings (res: Response<any, Record<string, any>, number>, mode: string, settings: MapSettings): any {
+    res.render('settings/map', generateMapSettings(mode, settings))
   }
 }

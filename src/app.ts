@@ -36,12 +36,21 @@ app.use('/assets', express.static('assets'))
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist'))
 app.use(favicon(path.join(process.cwd(), '/assets/favicon.ico')))
 
-const storage = multer.diskStorage({
+const logStorage = multer.diskStorage({
   destination: function (req: any, file: any, cb: any) {
     cb(null, './data')
   },
   filename: function (req: any, file: any, cb: any) {
     cb(null, 'log.db')
+  }
+})
+
+const mapStorage = multer.diskStorage({
+  destination: function (req: any, file: any, cb: any) {
+    cb(null, './assets/maps')
+  },
+  filename: function (req: any, file: any, cb: any) {
+    cb(null, 'map')
   }
 })
 
@@ -148,6 +157,10 @@ app.get('/settings/serials', (req, res) => {
   settings.renderSettingsSerials(res, serials, cp)
 })
 
+app.get('/settings/map', (req, res) => {
+  settings.renderMapSettings(res, cp.getMode(), map.getMapSettings())
+})
+
 app.get('/edit/:id', (req, res) => {
   const id = parseInt(req.params.id)
   renderEditTransmission(res, db, id, cp, serials)
@@ -232,13 +245,14 @@ app.get('/log/delete/:id', (req, res) => {
   })
 })
 
-const upload = multer({
-  storage: storage,
+const uploadLog = multer({
+  storage: logStorage,
   fileFilter: dbFilter
 }).single('log')
 
+
 app.post('/upload_log', (req, res) => {
-  upload(req, res, function (err: any) {
+  uploadLog(req, res, function (err: any) {
     if (err) {
       console.log(err)
       settings.renderSettingsGeneral(res, cp, url, err.message)
@@ -251,6 +265,24 @@ app.post('/upload_log', (req, res) => {
 app.get('/reset_log', (req, res) => {
   db.resetDb((response) => {
     res.send(response)
+  })
+})
+
+const uploadMap = multer({
+  storage: mapStorage,
+  fileFilter: dbFilter
+}).single('map')
+
+app.post('/upload_map', (req, res) => {
+  uploadMap(req, res, function (err: any) {
+    if (err) {
+      console.log(err)
+      settings.renderMapSettings(res, cp.getMode(), map.getMapSettings())
+      console.log('error uploading map')
+    } else {
+      settings.renderMapSettings(res, cp.getMode(), map.getMapSettings())
+      console.log('success')
+    }
   })
 })
 

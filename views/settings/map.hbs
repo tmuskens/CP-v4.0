@@ -14,50 +14,69 @@
   </head>
   <body>
     <div class="p-3 h-100 w-100">
-      <p>Please be advised that these settings affect the whole server, not this individual machine.</p>
-      <h5>Server Settings</h5>
-      <table>
-          <tr>
-            <td>URL:</td>
-            <td class="px-3">{{url}}</td>
-          </tr>
-      </table>
-      <br>
-      <button type="button" id="stop-server" class="btn btn-sm theme-button">Stop Server</button>
-      <br>
-      <br>
-      <h5>Current Details</h5>
-      <form action="../update_settings" name="settings">
+      <h5>Location Settings </h5>
+      <p>Please provide the Admin Return where you will recieve sub-units location data, and the serial where the grid reference is recorded.</p>
+      <form action="../loc_settings" name="settings">
         <table>
           <tr>
-            <td>Callsign</td>
-            <td class="px-3"><input class="form-control form-control-sm" name="callsign" value="{{callsign}}" required/></td>
+            <td>Location Return</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="loc_return" value="{{map.locReturn}}" required/></td>
           </tr>
           <tr>
-            <td>Duty Officer</td>
-            <td class="px-3"><input class="form-control form-control-sm" name="duty-officer" value="{{dutyOfficer}}" required/></td>
+            <td>Location Serial</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="loc_serial" value="{{map.locSerial}}" required/></td>
           </tr>
         </table>
         <button type="submit" class="btn btn-sm theme-button">Save</button>
       </form>
       <br>
       <br>
-      <h5>Log Settings</h5>
+      <h5>Map Settings </h5>
+      <p class="mb-0">Please enter the precise bounds of the map provided.</p>
+      <ul>
+        <li class="mb-0">X bounds refers to the easting aligned to the western border of the map, and the easting alligned to the eastern border of the map. (Left then right)</li>
+        <li class="mb-0">Y bounds refers to the northing aligned to the southern border of the map, and the northing alligned to the north border of the map. (Bottom then top)</li>
+        <li>Please note, the image borders must be precisely aligned to these map bounds, otherwise grid references will not plot correctly.</li>
+      </ul> 
+      <form action="../map_settings" name="settings">
+        <table>
+          <tr>
+            <td class="pe-3"><strong>X Bounds:</strong></td>
+            <td>East:</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="east" value="{{map.east}}" required/></td>
+            <td>West:</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="west" value="{{map.west}}" required/></td>
+          </tr>
+          <tr>
+            <td class="pe-3"><strong>Y Bounds:</strong></td>
+            <td>South:</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="south" value="{{map.south}}" required/></td>
+            <td>North:</td>
+            <td class="px-3"><input class="form-control form-control-sm" name="north" value="{{map.north}}" required/></td>
+          </tr>
+        </table>
+        <button type="submit" class="btn btn-sm theme-button">Save</button>
+      </form>
+      <br>
+      <br>
+      <h5>Map Image</h5>
       <table>
         <tr>
-          <td><form action="/download_log"><button type="submit" class="btn w-100 btn-sm theme-button">Download Log</button></form></td>
-          <td class="px-3"><span style="font-style:italic">Do this at the end of camp!</span></td>
+          {{#if map.file}}
+            <td colspan="3">Current Map: <a href="/assets/maps/{{map.file}}" target="_blank">{{map.file}}</a></td>
+          {{else}}
+            <td colspan="3">Current Map: No map uploaded</td>
+          {{/if}}
         </tr>
-        <tr>
-          <td class="py-2"><button type="button"  class="btn w-100 btn-sm theme-button" data-bs-toggle="modal" data-bs-target="#confirmation-modal">Reset Log</button></td>
-          <td class="px-3"><span style="font-style:italic">Do this at the start of camp!</span></td>
+        <tr >
+          <td class="pt-3" colspan="2">Upload new map:</td>
         </tr>
-        <form action="/upload_log" method="POST" enctype="multipart/form-data" name="log_upload" >
+        <form action="/upload_map" method="POST" enctype="multipart/form-data" name="map_upload" >
           <tr>
             <td colspan="2" class="py-2">
-              <input class="form-control form-control-sm" name="log" type="file" id="log-file" required>
+              <input class="form-control form-control-sm" name="map" type="file" id="map-file" required>
             </td>
-            <td class="px-2"><button type="submit" id="upload-log" class="btn btn-sm theme-button">Upload Log</button></td>
+            <td class="px-2"><button type="submit" id="upload-map" class="btn btn-sm theme-button">Upload Map</button></td>
           </tr>
         </form>
       </table>

@@ -12,11 +12,16 @@ var register = function (Handlebars) {
       return (str.length === 5) ? '0' + str : str
     },
     timeDiff: function (currentDtg, dtg) {
-      var hours = ~~(currentDtg / 100) - ~~(dtg / 100)
+      var days = ~~(currentDtg / 10000) - ~~(dtg / 10000)
+      var hours = (~~(currentDtg / 100) % 100) - (~~(dtg / 100) % 100)
       var mins = currentDtg % 100 - dtg % 100
       while (mins < 0) {
         mins += 60
         hours -= 1
+      }
+      while (days > 0) {
+        hours += 24
+        days -= 1
       }
       return hours + 'h ' + mins + 'm'
     }
